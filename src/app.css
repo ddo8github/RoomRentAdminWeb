@@ -1,0 +1,25 @@
+* :not(i) {
+  font-family: 'Quicksand Medium', sans-serif !important;
+}
+
+body {
+  min-width: 800px !important;
+}
+
+.logo {
+  width: 40px;
+}
+
+.container-main {
+  width: 100%;
+  padding-left: 72px;
+  padding-right: 121px;
+}
+
+.top-profile-image {
+  width: 40px;
+}
+
+input {
+  font-size: 1.3em !important;
+}

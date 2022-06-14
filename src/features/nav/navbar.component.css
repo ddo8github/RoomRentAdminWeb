@@ -1,0 +1,21 @@
+.group-middle-nav-btn {
+    display: flex;
+    margin: 0 auto;
+}
+
+.group-middle-nav-btn a i {
+    margin-left: 10px;
+}
+
+.middle-nav-icon {
+    font-size: 2em !important;
+    margin: auto !important;
+}
+
+.active-nav-link {
+    border-bottom: 3px solid #4FC3F7;
+}
+
+.active-nav-link i{
+    color: #4FC3F7;
+}

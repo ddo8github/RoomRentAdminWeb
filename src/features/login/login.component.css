@@ -1,0 +1,17 @@
+.parent-login-form {
+    height: 100vh;
+    width: 42%;
+    position: relative;
+    display: table;
+    margin: 0 auto;
+}
+
+.in-center-login {
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+input {
+    margin-bottom: 10px !important;
+}
