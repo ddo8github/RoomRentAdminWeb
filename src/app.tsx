@@ -1,10 +1,11 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import './app.css';
 import {RouterConfig} from './config/router.config';
-import {NavbarComponent} from './features/nav/navbar.component';
 import {Route} from 'react-router-dom';
 import LoginComponent from './features/login/login.component';
-
+import NavbarComponent from './features/nav/navbar.component';
+import FooterComponent from './features/footer/footer.component';
+import {ToastContainer} from 'react-toastify';
 
 class App extends Component<any, any> {
     constructor(prop: any) {
@@ -15,6 +16,7 @@ class App extends Component<any, any> {
         return (
             // Fragment
             <>
+                <ToastContainer position={'bottom-right'} hideProgressBar/>
                 <Route exact path='/' component={LoginComponent}></Route>
                 <Route path={'/(.+)'} render={() => (
                     <>
@@ -22,6 +24,7 @@ class App extends Component<any, any> {
                         <div className='container-main'>
                             <RouterConfig/>
                         </div>
+                        <FooterComponent></FooterComponent>
                     </>
                 )}/>
             </>

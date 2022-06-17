@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 export class VideoComponent extends Component<any, any> {
     constructor(prop: any) {

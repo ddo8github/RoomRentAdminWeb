@@ -1,24 +1,22 @@
-import {Field, Form, Formik} from 'formik';
-import React, {useState} from 'react';
-import {Button, Header, Image, Segment, Transition} from 'semantic-ui-react';
+import {ErrorMessage, Field, Form, Formik} from 'formik';
+import React from 'react';
+import {Button, Header, Icon, Image, Label, Segment, Transition} from 'semantic-ui-react';
 import './login.component.css';
 import {useHistory} from 'react-router-dom';
-import {NAV_ROOM_COMPANY} from '../../config/constant';
 import logo from '../../logo.png';
+import {useStore} from '../../stores/stores';
+import {observer} from 'mobx-react-lite';
 
 function LoginComponent() {
     const history = useHistory();
+    const {userStore} = useStore();
     return (
         <div className={'parent-login-form'}>
             <Segment size={'massive'} color={'orange'} clearing raised className='in-center-login'>
-                <Formik initialValues={{username: '', password: ''}}
-                        onSubmit={(values) => {
-                            console.log(values);
-                            if (values['username'] === '1') {
-                                history.push('/' + NAV_ROOM_COMPANY);
-                            }
-                        }}>
-                    {({handleSubmit}) => (
+                <Formik initialValues={{username: '', password: '', error: null}}
+                        onSubmit={(values, {setErrors}) => userStore.login(values)
+                            .catch((e) => setErrors({error: e.message}))}>
+                    {({handleSubmit, errors}) => (
                         <Form className={'ui form'} autoComplete='off' onSubmit={handleSubmit}>
                             <Header as={'h2'} color={'orange'}>
                                 <Transition animation={'tada'} transitionOnMount={true} visible={true}
@@ -32,7 +30,13 @@ function LoginComponent() {
                             </Header>
                             <Field placeholder='Username' name='username'/>
                             <Field placeholder='Password' name='password' type='password'/>
-                            <Button primary type={'submit'} content={'Đăng Nhập'} floated={'right'}/>
+                            <ErrorMessage name={'error'} render={() => (
+                                <Label style={{marginBottom: '1.5em'}} basic color={'red'} content={errors.error}/>
+                            )}/>
+                            <Button primary icon labelPosition={'right'} type={'submit'} floated={'right'}>
+                                Đăng Nhập
+                                <Icon name={'arrow right'}/>
+                            </Button>
                         </Form>
                     )}
                 </Formik>
@@ -41,4 +45,4 @@ function LoginComponent() {
     );
 }
 
-export default LoginComponent;
+export default observer(LoginComponent);
