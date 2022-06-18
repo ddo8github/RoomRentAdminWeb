@@ -4,18 +4,22 @@ interface UserLogin {
 }
 
 interface TokenModel {
-    accessToken: string;
-    idToken: string;
-    expiresIn: number;
-    refreshToken: string;
-    tokenType: string;
-    username: string;
-    role: string;
-    s3UserAccessKey: string;
-    s3UserScretkey: string;
-    aWSRegion: string;
-    bucketname: string;
-    acl: string;
+    AccessToken: string;
+    IdToken: string;
+    ExpiresIn: number;
+    RefreshToken: string;
+    TokenType: string;
+    Username: string;
+    Role: string;
+    S3UserAccessKey: string;
+    S3UserScretkey: string;
+    AWSRegion: string;
+    Bucketname: string;
+    Acl: string;
+}
+
+export interface SignoutModel {
+    Username: string | undefined;
 }
 
 class DataResultModel<T> {

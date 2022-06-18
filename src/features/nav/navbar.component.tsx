@@ -1,18 +1,20 @@
 import React from 'react';
 import logo from '../../logo.png';
-import demouser from '../../images/21.jpg';
 import './navbar.component.css';
 import {NavLink} from 'react-router-dom';
-import {Menu} from 'semantic-ui-react';
+import {Button, Icon, Menu} from 'semantic-ui-react';
 import {NAV_PARTNER, NAV_ROOM_COMPANY} from '../../config/constant';
+import {useStore} from '../../stores/stores';
+import {observer} from 'mobx-react-lite';
 
 function NavbarComponent() {
+    const {commonStore, userStore} = useStore();
     return (
         <Menu>
             <Menu.Item><img className='ui image logo' src={logo} alt={''}/></Menu.Item>
             <Menu.Item>
                 <div className='ui icon input icon'>
-                    <input type='text' placeholder='Search Fellow' style={{borderRadius: '24px'}}/>
+                    <input type='text' placeholder='Tìm kiếm phòng' style={{borderRadius: '24px'}}/>
                     <i aria-hidden='true' className='search icon'></i>
                 </div>
             </Menu.Item>
@@ -36,11 +38,14 @@ function NavbarComponent() {
                 </Menu.Item>
             </div>
             <Menu.Item position='right'>
-                <img className='ui circular image top-profile-image' src={demouser} alt={''}/>
-                <span style={{marginLeft: '10px'}}>David</span>
+                <Icon circular name='user' size={'large'}/>
+                <span style={{marginLeft: '10px'}}>Hello {commonStore.user?.Username}</span>
+            </Menu.Item>
+            <Menu.Item as={Button} onClick={() => userStore.logout()}>
+                <Icon name={'sign-out'}/>
             </Menu.Item>
         </Menu>
     );
 }
 
-export default NavbarComponent;
+export default observer(NavbarComponent);

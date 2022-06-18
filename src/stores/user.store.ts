@@ -1,23 +1,35 @@
 import {makeAutoObservable} from 'mobx';
-import {TokenModel, UserLogin} from '../models/models';
+import {UserLogin} from '../models/models';
 import agent from '../utils/agent';
-import {appHistory} from '../index';
 import {store} from './stores';
+import {NAV_ROOM_COMPANY} from '../config/constant';
 
 export default class UserStore {
-    public user: TokenModel | undefined;
-
     constructor() {
         makeAutoObservable(this);
     }
 
     login = async (creds: UserLogin) => {
         try {
-            const user = await agent.Account.login(creds);
-            store.commonStore.setToken(user);
-            appHistory.push('/activities');
+            const res = await agent.Account.login(creds);
+            store.commonStore.setUser(res.Data!);
+            store.commonStore.goToPage('/' + NAV_ROOM_COMPANY);
         } catch (e) {
             throw e;
         }
     };
+
+    logout = async () => {
+        try {
+            store.commonStore.setAppLoaded(true);
+            const res = await agent.Account.signout({Username: store.commonStore.user?.Username});
+            store.commonStore.setUser(null);
+            window.localStorage.removeItem('26ed014a');
+            store.commonStore.setAppLoaded(false);
+            store.commonStore.goToPage('/');
+        } catch (e) {
+            store.commonStore.setAppLoaded(false);
+            throw e;
+        }
+    }
 }
