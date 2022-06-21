@@ -1,13 +1,13 @@
 import axios, {AxiosResponse} from 'axios';
 import {store} from '../stores/stores';
 import cryptor from './cryptor';
-import {DataResultModel, SignoutModel, TokenModel, UserLogin} from '../models/models';
+import {DataResultModel, RefreshTokenModel, SignoutModel, TokenModel, UserLogin} from '../models/models';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_ROOT;
 
 axios.interceptors.request.use((config) => {
     try {
-        const token = store.commonStore.user;
+        const token = store.userStore.user?.AccessToken;
         if (token) {
             config.headers!.Authorization = `Bearer ${token}`;
         }
@@ -53,6 +53,7 @@ const requests = {
 const Account = {
     login: (user: UserLogin) => requests.post<DataResultModel<TokenModel>>('auth/0de2ac27', user),
     signout: (user: SignoutModel) => requests.post<DataResultModel<Boolean>>('auth/e0e9cc9a', user),
+    refreshToken: (refreshtoken: RefreshTokenModel) => requests.post<DataResultModel<TokenModel>>('auth/3e5867c9', refreshtoken),
 };
 
 const agent = {

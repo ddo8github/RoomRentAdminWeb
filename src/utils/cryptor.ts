@@ -19,6 +19,17 @@ const deResponseData = <T>(encryptedText: string): T => {
     }
 };
 
+const isJWTExpired = (token: string): Boolean => {
+    if (token) {
+        const jwtToken = JSON.parse(atob(token.split('.')[1]));
+        const jwtExpiredDate = new Date(jwtToken.exp * 1000);
+        const now = new Date();
+        return (jwtExpiredDate <= now);
+    } else {
+        return true;
+    }
+};
+
 const enRequestData = <T>(plainText: string): string => {
     try {
         const key = enc.Utf8.parse(process.env.REACT_APP_REQUEST_EN_KEY!);
@@ -36,31 +47,31 @@ const enRequestData = <T>(plainText: string): string => {
     }
 };
 
-const localStorage = {
-    dData: <T>(eStr: string): T | null => {
-        try {
-            if (eStr === null) {
-                return null;
-            }
+const dData = <T>(eStr: string): T | null => {
+    try {
+        if (eStr) {
             const deStr = AES.decrypt(eStr, process.env.REACT_APP_KFE!).toString(enc.Utf8);
-            return JSON.parse(deStr);
-        } catch (e) {
-            throw e;
+            const res: T = JSON.parse(deStr);
+            return res;
+        } else {
+            return null;
         }
-    },
-    eData: <T>(obj: T): string => {
-        try {
-            const oStr = JSON.stringify(obj);
-            return AES.encrypt(oStr, process.env.REACT_APP_KFE!).toString();
-        } catch (err) {
-            throw err;
-        }
+    } catch (e) {
+        throw e;
+    }
+};
+const eData = <T>(obj: T): string => {
+    try {
+        const oStr = JSON.stringify(obj);
+        return AES.encrypt(oStr, process.env.REACT_APP_KFE!).toString();
+    } catch (err) {
+        throw err;
     }
 };
 
 const setDataToLocalStorage = <T>(key: string, data: T): boolean => {
     try {
-        const eStr = localStorage.eData<T>(data);
+        const eStr = eData<T>(data);
         window.localStorage.setItem(key, eStr);
         return true;
     } catch (e) {
@@ -72,7 +83,7 @@ const setDataToLocalStorage = <T>(key: string, data: T): boolean => {
 const getDataFromLocalStorage = <T>(key: string): T | null => {
     try {
         const eStr = window.localStorage.getItem(key);
-        return localStorage.dData<T>(eStr!);
+        return dData<T>(eStr!);
     } catch (e) {
         throw e;
     }
@@ -82,7 +93,8 @@ const cryptor = {
     deResponseData,
     enRequestData,
     setDataToLocalStorage,
-    getDataFromLocalStorage
+    getDataFromLocalStorage,
+    isJWTExpired
 };
 
 export default cryptor;

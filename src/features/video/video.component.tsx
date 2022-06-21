@@ -1,13 +1,25 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
+import FileUploadMainWidget from '../../layout/fileupload/file.upload.main.widget';
+import {FileModel} from '../../models/models';
+import {useStore} from '../../stores/stores';
+import {observer} from 'mobx-react-lite';
 
-export class VideoComponent extends Component<any, any> {
-    constructor(prop: any) {
-        super(prop);
+function VideoComponent() {
+    const {commonStore: {uploadInProgress, uploadFile, setUploadPhotoStatus}} = useStore();
+
+    async function handlePhotoUpload(files: FileModel[]) {
+        files.map(async (file) => {
+            await uploadFile(file, files.length);
+        });
     }
 
-    render() {
-        return (
+    return (
+        <>
             <h1>Video.</h1>
-        );
-    }
+            <FileUploadMainWidget uploadPhoto={handlePhotoUpload}
+                                  acceptFileType={{'image/png': ['.png', '.jpg', '.jpeg']}} loading={uploadInProgress}/>
+        </>
+    );
 }
+
+export default observer(VideoComponent);

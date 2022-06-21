@@ -18,6 +18,29 @@ interface TokenModel {
     Acl: string;
 }
 
+interface RefreshTokenModel {
+    RefreshToken: string;
+}
+
+interface FileModel {
+    Size: number;
+    Percentage: number;
+    S3FileName: string;
+    File: File;
+    Ext: string;
+    previewImage: string | undefined;
+    Bucket: string;
+    Key: string;
+    Location: string;
+    error: string | undefined;
+}
+
+interface S3FileModel {
+    Bucket: string;
+    Key: string;
+    Location: string;
+}
+
 export interface SignoutModel {
     Username: string | undefined;
 }
@@ -32,4 +55,4 @@ class DataResultModel<T> {
     ErrorNumber: number | undefined;
 }
 
-export type {UserLogin, TokenModel, DataResultModel};
+export type {UserLogin, TokenModel, DataResultModel, RefreshTokenModel, FileModel, S3FileModel};

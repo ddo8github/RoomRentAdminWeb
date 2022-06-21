@@ -6,7 +6,7 @@ import {useHistory} from 'react-router-dom';
 import logo from '../../logo.png';
 import {useStore} from '../../stores/stores';
 import {observer} from 'mobx-react-lite';
-import FooterComponent from '../footer/footer.component';
+import FooterComponent from '../../layout/footer/footer.component';
 
 function LoginComponent() {
     const history = useHistory();

@@ -1,19 +1,31 @@
-import React from 'react';
-import {ToastContainer} from 'react-toastify';
+import React, {useEffect} from 'react';
+import {toast, ToastContainer} from 'react-toastify';
 import {Route} from 'react-router-dom';
 import LoginComponent from './features/login/login.component';
-import NavbarComponent from './features/nav/navbar.component';
+import NavbarComponent from './layout/nav/navbar.component';
 import {RouterConfig} from './config/router.config';
-import FooterComponent from './features/footer/footer.component';
+import FooterComponent from './layout/footer/footer.component';
 import {useStore} from './stores/stores';
-import LoadingComponent from './features/layout/loading.component';
+import LoadingComponent from './layout/loading/loading.component';
 import {observer} from 'mobx-react-lite';
 import './app.css';
+import cryptor from './utils/cryptor';
 
 function App() {
-    const {commonStore} = useStore();
+    const {commonStore, userStore} = useStore();
+    useEffect(() => {
+        userStore.getUserFromLocalStorage();
+        if (userStore.user) {
+            const res = cryptor.isJWTExpired(userStore.user?.AccessToken!);
+            if (res) {
+                userStore.logout().catch((e) => toast.error(e.message));
+            } else {
+                // commonStore.goToPage('/' + NAV_ROOM_COMPANY);
+            }
+        }
+    }, [commonStore]);
     if (commonStore.appLoaded) {
-        return <LoadingComponent content={'Loading App...'}/>;
+        return <LoadingComponent content={commonStore.appLoadedContent}/>;
     }
     return (
         // Fragment

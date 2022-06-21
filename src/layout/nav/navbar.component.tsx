@@ -39,7 +39,7 @@ function NavbarComponent() {
             </div>
             <Menu.Item position='right'>
                 <Icon circular name='user' size={'large'}/>
-                <span style={{marginLeft: '10px'}}>Hello {commonStore.user?.Username}</span>
+                <span style={{marginLeft: '10px'}}>Hello {userStore.user?.Username}</span>
             </Menu.Item>
             <Menu.Item as={Button} onClick={() => userStore.logout()}>
                 <Icon name={'sign-out'}/>
