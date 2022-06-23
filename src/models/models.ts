@@ -1,3 +1,5 @@
+import {StepProps} from 'semantic-ui-react/dist/commonjs/elements/Step/Step';
+
 interface UserLogin {
     username: string;
     password: string;
@@ -35,6 +37,9 @@ interface FileModel {
     error: string | undefined;
 }
 
+interface StepperModel extends StepProps {
+}
+
 interface S3FileModel {
     Bucket: string;
     Key: string;
@@ -55,4 +60,4 @@ class DataResultModel<T> {
     ErrorNumber: number | undefined;
 }
 
-export type {UserLogin, TokenModel, DataResultModel, RefreshTokenModel, FileModel, S3FileModel};
+export type {UserLogin, TokenModel, DataResultModel, RefreshTokenModel, FileModel, S3FileModel, StepperModel};

@@ -1,12 +1,23 @@
 import './roomcom.component.css';
 import React from 'react';
-import {Card, Header, Icon, Image, Popup, Rating} from 'semantic-ui-react';
-import p1 from '../../images/p1.jpg';
+import {Button, Card, Header, Icon, Image, Popup, Rating} from 'semantic-ui-react';
+import p1 from '../../../images/p1.jpg';
+import {useStore} from '../../../stores/stores';
+import {NAV_ROM_NEW} from '../../../config/constant';
 
 function RoomcomComponent() {
+    const {commonStore: {goToPage}} = useStore();
     return (
         <div>
-            <Header as={'h2'}>Danh sách phòng của AZ Building</Header>
+            <div style={{display: 'flex', width: '100%', marginBottom: '20px'}}>
+                <Header as={'h2'} style={{width: '90%'}}>Danh sách phòng của AZ Building</Header>
+                <Button icon labelPosition='right' style={{width: '180px'}} primary
+                        onClick={() => goToPage('/' + NAV_ROM_NEW)}>
+                    Thêm Phòng
+                    <Icon name='add square'/>
+                </Button>
+            </div>
+
             <div>
                 <Card.Group>
                     <Card

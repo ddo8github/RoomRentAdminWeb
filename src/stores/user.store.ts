@@ -56,6 +56,7 @@ export default class UserStore {
             runInAction(() => {
                 this.user = cryptor.getDataFromLocalStorage<TokenModel>('26ed014a');
             });
+            this.startRefreshTokenTimer();
         } catch (e) {
             throw e;
         }
@@ -68,6 +69,7 @@ export default class UserStore {
                     RefreshToken: this.user?.RefreshToken
                 };
                 const res = await agent.Account.refreshToken(refreshTokenModel);
+                res.Data!.RefreshToken = this.user.RefreshToken;
                 this.setUser(res.Data!);
             }
         } catch (e) {
@@ -79,7 +81,8 @@ export default class UserStore {
         if (this.user) {
             const jwtToken = JSON.parse(atob(this.user.AccessToken.split('.')[1]));
             const expires = new Date(jwtToken.exp * 1000);
-            const timeout = expires.getTime() - Date.now() - (120 * 1000);
+            // 5 mins timeout
+            const timeout = expires.getTime() - Date.now() - (3580 * 1000);
             setTimeout(this.refreshToken, timeout);
         }
     }

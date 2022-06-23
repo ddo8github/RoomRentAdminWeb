@@ -15,7 +15,6 @@ import {NAV_ROOM_COMPANY} from './config/constant';
 function App() {
     const {commonStore, userStore} = useStore();
     useEffect(() => {
-        // userStore.getUserFromLocalStorage();
         if (userStore.isLoggedIn) {
             const res = cryptor.isJWTExpired(userStore.user?.AccessToken!);
             if (res) {
@@ -28,7 +27,7 @@ function App() {
         } else {
             commonStore.goToPage('/');
         }
-    }, [commonStore]);
+    }, [commonStore, userStore]);
     if (commonStore.appLoaded) {
         return <LoadingComponent content={commonStore.appLoadedContent}/>;
     }
