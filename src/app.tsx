@@ -10,18 +10,23 @@ import LoadingComponent from './layout/loading/loading.component';
 import {observer} from 'mobx-react-lite';
 import './app.css';
 import cryptor from './utils/cryptor';
+import {NAV_ROOM_COMPANY} from './config/constant';
 
 function App() {
     const {commonStore, userStore} = useStore();
     useEffect(() => {
-        userStore.getUserFromLocalStorage();
-        if (userStore.user) {
+        // userStore.getUserFromLocalStorage();
+        if (userStore.isLoggedIn) {
             const res = cryptor.isJWTExpired(userStore.user?.AccessToken!);
             if (res) {
                 userStore.logout().catch((e) => toast.error(e.message));
             } else {
-                // commonStore.goToPage('/' + NAV_ROOM_COMPANY);
+                if (window.location.pathname === '/') {
+                    commonStore.goToPage('/' + NAV_ROOM_COMPANY);
+                }
             }
+        } else {
+            commonStore.goToPage('/');
         }
     }, [commonStore]);
     if (commonStore.appLoaded) {

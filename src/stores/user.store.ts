@@ -1,4 +1,4 @@
-import {makeAutoObservable} from 'mobx';
+import {makeAutoObservable, runInAction} from 'mobx';
 import {RefreshTokenModel, TokenModel, UserLogin} from '../models/models';
 import agent from '../utils/agent';
 import {store} from './stores';
@@ -51,9 +51,11 @@ export default class UserStore {
         }
     };
 
-    getUserFromLocalStorage = () => {
+    private getUserFromLocalStorage = () => {
         try {
-            this.user = cryptor.getDataFromLocalStorage<TokenModel>('26ed014a');
+            runInAction(() => {
+                this.user = cryptor.getDataFromLocalStorage<TokenModel>('26ed014a');
+            });
         } catch (e) {
             throw e;
         }

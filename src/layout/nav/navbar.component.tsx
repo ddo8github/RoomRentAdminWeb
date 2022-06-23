@@ -8,7 +8,7 @@ import {useStore} from '../../stores/stores';
 import {observer} from 'mobx-react-lite';
 
 function NavbarComponent() {
-    const {commonStore, userStore} = useStore();
+    const {userStore: {user, logout}} = useStore();
     return (
         <Menu>
             <Menu.Item><img className='ui image logo' src={logo} alt={''}/></Menu.Item>
@@ -38,11 +38,11 @@ function NavbarComponent() {
                 </Menu.Item>
             </div>
             <Menu.Item position='right'>
-                <Icon circular name='user' size={'large'}/>
-                <span style={{marginLeft: '10px'}}>Hello {userStore.user?.Username}</span>
+                <Icon circular name='user' size={'large'} style={{color: '#1E88E5'}}/>
+                <strong style={{marginLeft: '10px'}}>Hello {user?.Username}</strong>
             </Menu.Item>
-            <Menu.Item as={Button} onClick={() => userStore.logout()}>
-                <Icon name={'sign-out'}/>
+            <Menu.Item as={Button} onClick={() => logout()}>
+                <Icon name={'sign-out'} size={'big'} style={{color: '#1E88E5'}}/>
             </Menu.Item>
         </Menu>
     );

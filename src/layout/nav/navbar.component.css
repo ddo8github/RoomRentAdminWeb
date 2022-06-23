@@ -10,12 +10,13 @@
 .middle-nav-icon {
     font-size: 2em !important;
     margin: auto !important;
+    color: #64B5F6;
 }
 
 .active-nav-link {
-    border-bottom: 3px solid #4FC3F7;
+    border-bottom: 3px solid #1E88E5;
 }
 
 .active-nav-link i{
-    color: #4FC3F7;
+    color: #1E88E5;
 }
