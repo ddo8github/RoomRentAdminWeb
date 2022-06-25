@@ -10,7 +10,7 @@ import LoadingComponent from './layout/loading/loading.component';
 import {observer} from 'mobx-react-lite';
 import './app.css';
 import cryptor from './utils/cryptor';
-import {NAV_ROOM_COMPANY} from './config/constant';
+import {Constants} from './config/constant';
 
 function App() {
     const {commonStore, userStore} = useStore();
@@ -21,7 +21,7 @@ function App() {
                 userStore.logout().catch((e) => toast.error(e.message));
             } else {
                 if (window.location.pathname === '/') {
-                    commonStore.goToPage('/' + NAV_ROOM_COMPANY);
+                    commonStore.goToPage(Constants.NAV_ROOM_COMPANY);
                 }
             }
         } else {

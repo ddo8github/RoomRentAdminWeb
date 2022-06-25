@@ -46,18 +46,31 @@ interface S3FileModel {
     Location: string;
 }
 
-export interface SignoutModel {
+interface SignoutModel {
     Username: string | undefined;
 }
 
-class DataResultModel<T> {
+interface RoomInfo {
+    roomType: string;
+    price: number;
+    square: number;
+    utilities: string[];
+    province: string;
+    district: string;
+    address: string;
+}
+
+interface DataResultModel<T> {
     Data: T | undefined;
-    InnerEx: string = '';
-    Name: string = '';
-    Message: string = '';
-    Success: boolean = true;
-    Errors: string[] = [];
+    InnerEx: string;
+    Name: string;
+    Message: string;
+    Success: boolean;
+    Errors: string[];
     ErrorNumber: number | undefined;
 }
 
-export type {UserLogin, TokenModel, DataResultModel, RefreshTokenModel, FileModel, S3FileModel, StepperModel};
+export type {
+    UserLogin, SignoutModel, TokenModel, DataResultModel, RefreshTokenModel,
+    FileModel, S3FileModel, StepperModel, RoomInfo,
+};

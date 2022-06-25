@@ -3,9 +3,9 @@ import logo from '../../logo.png';
 import './navbar.component.css';
 import {NavLink} from 'react-router-dom';
 import {Button, Icon, Menu} from 'semantic-ui-react';
-import {NAV_PARTNER, NAV_ROOM_COMPANY} from '../../config/constant';
 import {useStore} from '../../stores/stores';
 import {observer} from 'mobx-react-lite';
+import {Constants} from '../../config/constant';
 
 function NavbarComponent() {
     const {userStore: {user, logout}} = useStore();
@@ -19,7 +19,7 @@ function NavbarComponent() {
                 </div>
             </Menu.Item>
             <div className='group-middle-nav-btn'>
-                <Menu.Item name={NAV_ROOM_COMPANY} as={NavLink} to={'/' + NAV_ROOM_COMPANY}
+                <Menu.Item name={Constants.ROOM_COMPANY} as={NavLink} to={Constants.NAV_ROOM_COMPANY}
                            activeClassName='active-nav-link'>
                     <i aria-hidden='true' className='home icon middle-nav-icon'>
                     </i>
@@ -28,7 +28,7 @@ function NavbarComponent() {
                     <i aria-hidden='true' className='user circle icon middle-nav-icon'>
                     </i>
                 </Menu.Item>
-                <Menu.Item name={NAV_PARTNER} as={NavLink} to={'/' + NAV_PARTNER} activeClassName='active-nav-link'>
+                <Menu.Item name={Constants.PARTNER} as={NavLink} to={Constants.NAV_PARTNER} activeClassName='active-nav-link'>
                     <i aria-hidden='true' className='group icon middle-nav-icon'>
                     </i>
                 </Menu.Item>

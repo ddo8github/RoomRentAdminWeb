@@ -2,8 +2,8 @@ import {makeAutoObservable, runInAction} from 'mobx';
 import {RefreshTokenModel, TokenModel, UserLogin} from '../models/models';
 import agent from '../utils/agent';
 import {store} from './stores';
-import {MSG_LOADING_APP, NAV_ROOM_COMPANY} from '../config/constant';
 import cryptor from '../utils/cryptor';
+import {Constants} from '../config/constant';
 
 export default class UserStore {
     public user: TokenModel | null = null;
@@ -22,7 +22,7 @@ export default class UserStore {
             const res = await agent.Account.login(creds);
             this.setUser(res.Data!);
             this.startRefreshTokenTimer();
-            store.commonStore.goToPage('/' + NAV_ROOM_COMPANY);
+            store.commonStore.goToPage(Constants.NAV_ROOM_COMPANY);
         } catch (e) {
             throw e;
         }
@@ -30,7 +30,7 @@ export default class UserStore {
 
     logout = async () => {
         try {
-            store.commonStore.setAppLoaded(true, MSG_LOADING_APP);
+            store.commonStore.setAppLoaded(true, Constants.MSG_LOADING_APP);
             const res = await agent.Account.signout({Username: this.user?.Username});
             this.setUser(null);
             window.localStorage.removeItem('26ed014a');
@@ -70,6 +70,7 @@ export default class UserStore {
                 };
                 const res = await agent.Account.refreshToken(refreshTokenModel);
                 res.Data!.RefreshToken = this.user.RefreshToken;
+                res.Data!.Username = this.user.Username;
                 this.setUser(res.Data!);
             }
         } catch (e) {
@@ -82,7 +83,7 @@ export default class UserStore {
             const jwtToken = JSON.parse(atob(this.user.AccessToken.split('.')[1]));
             const expires = new Date(jwtToken.exp * 1000);
             // 5 mins timeout
-            const timeout = expires.getTime() - Date.now() - (3580 * 1000);
+            const timeout = expires.getTime() - Date.now() - (Constants.TIME_OUT_SECOND * 1000);
             setTimeout(this.refreshToken, timeout);
         }
     }

@@ -4,7 +4,6 @@ import FileWidgetListPreview from './file.widget.listpreview';
 import {Button, Divider, Header} from 'semantic-ui-react';
 import {Accept} from 'react-dropzone';
 import {FileModel} from '../../models/models';
-import {observer} from 'mobx-react-lite';
 
 interface Props {
     loading: boolean;

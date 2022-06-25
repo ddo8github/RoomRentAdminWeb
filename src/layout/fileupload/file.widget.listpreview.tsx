@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
-import {Button, Card, Image, Input, Label, Progress} from 'semantic-ui-react';
+import React from 'react';
+import {Card, Image, Input, Label, Progress} from 'semantic-ui-react';
 import {FileModel} from '../../models/models';
-import {observer} from 'mobx-react-lite';
 
 interface Props {
     files: FileModel[];
