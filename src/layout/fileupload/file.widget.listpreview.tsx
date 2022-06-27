@@ -33,7 +33,8 @@ function FileWidgetListPreview({files}: Props) {
                                             </Card.Meta>
                                             <Card.Description>
                                                 <Input size={'mini'} key={'txtDesc' + index.toString()}
-                                                       style={{width: '90%'}} placeholder={'Ghi chú'}/>
+                                                       style={{width: '90%', marginBottom: '5px'}}
+                                                       placeholder={'Ghi chú'}/>
                                             </Card.Description>
                                             <Card.Content extra style={{width: '90%'}}>
                                                 <Progress key={'progress' + index.toString()} percent={f.Percentage}

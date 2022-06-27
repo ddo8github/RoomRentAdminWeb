@@ -1,4 +1,4 @@
-import {StepperModel} from '../models/models';
+import {FileModel, RoomInfo, StepperModel} from '../models/models';
 import {makeAutoObservable} from 'mobx';
 
 export default class RoomStore {
@@ -25,6 +25,17 @@ export default class RoomStore {
             active: false
         }
     ];
+
+    public roomInfo: RoomInfo | null = null;
+    public filesPreparedUpload: FileModel[] = [];
+
+    setRoomInfo = (roomInfo: RoomInfo) => {
+        this.roomInfo = roomInfo;
+    }
+
+    setFilesPreparedUpload = (fileModel: FileModel[]) => {
+        this.filesPreparedUpload = fileModel;
+    }
 
     constructor() {
         makeAutoObservable(this);

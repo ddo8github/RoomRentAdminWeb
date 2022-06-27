@@ -30,8 +30,10 @@ function LoginComponent() {
                                         <Header.Subheader>An cư lạc nghiệp</Header.Subheader>
                                     </Header.Content>
                                 </Header>
-                                <Field placeholder='Username' name='username'/>
-                                <Field placeholder='Password' name='password' type='password'/>
+                                <Field placeholder='Username' name='username'
+                                       style={{marginBottom: '10px !important'}}/>
+                                <Field placeholder='Password' name='password' style={{marginBottom: '10px !important'}}
+                                       type='password'/>
                                 <ErrorMessage name={'error'} render={() => (
                                     <Label style={{marginBottom: '1.5em'}} basic color={'red'} content={errors.error}/>
                                 )}/>

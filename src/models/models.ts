@@ -38,6 +38,7 @@ interface FileModel {
 }
 
 interface StepperModel extends StepProps {
+
 }
 
 interface S3FileModel {

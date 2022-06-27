@@ -6,10 +6,10 @@ import {observer} from 'mobx-react-lite';
 
 interface Props {
     acceptFileType: Accept;
-    setFile: (files: FileModel[]) => void;
+    setFiles: (files: FileModel[]) => void;
 }
 
-function FileWidgetDropzone({setFile, acceptFileType}: Props) {
+function FileWidgetDropzone({setFiles, acceptFileType}: Props) {
     const dzStyle = {
         border: 'dashed 3px #eee',
         borderColor: '#eee',
@@ -40,8 +40,8 @@ function FileWidgetDropzone({setFile, acceptFileType}: Props) {
             };
             return fileModel;
         });
-        setFile(res);
-    }, [setFile]);
+        setFiles(res);
+    }, [setFiles]);
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop, accept: acceptFileType});
 
