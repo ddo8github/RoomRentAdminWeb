@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Card, Image, Input, Label, Progress} from 'semantic-ui-react';
 import {FileModel} from '../../models/models';
 import {observer} from 'mobx-react-lite';
@@ -8,7 +8,16 @@ interface Props {
 }
 
 function FileWidgetListPreview({files}: Props) {
-    const [percent, setPercent] = useState<number>(0);
+    const [updateCount, setUpdateCount] = useState<number>(0);
+    const timer = setInterval(() => {
+        setUpdateCount(updateCount === 0 ? 1 : 0);
+    }, 100);
+    useEffect(() => {
+        // It is component Unmount
+        return () => {
+            clearInterval(timer);
+        };
+    });
     return (
         <>
             <div>

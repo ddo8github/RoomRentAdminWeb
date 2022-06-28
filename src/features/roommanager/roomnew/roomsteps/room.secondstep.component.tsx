@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FileModel} from '../../../../models/models';
 import {useStore} from '../../../../stores/stores';
 import FileUploadMainWidget from '../../../../layout/fileupload/file.upload.main.widget';
@@ -11,25 +11,29 @@ interface Props {
 }
 
 function RoomSecondStepComponent({prevStep, nextStep}: Props) {
-    const [uploaded, setUploaded] = useState<boolean>(false);
+    const [shouldGoNext, setShouldGoNext] = useState<boolean>(false);
     const {
         commonStore: {uploadInProgress, uploadFile, setFilesPhotoRooms, filesPhotoRooms}
     } = useStore();
 
     const [existedFiles, setExistedFiles] = useState<FileModel[]>(filesPhotoRooms);
 
+    useEffect(() => {
+        setShouldGoNext(filesPhotoRooms.length > 0);
+    }, [setShouldGoNext]);
+
     async function handlePhotoUpload(files: FileModel[]) {
         setFilesPhotoRooms([]);
-        setUploaded(false);
+        setShouldGoNext(false);
         files.map(async (file) => {
             await uploadFile(file, files.length);
         });
-        setUploaded(true);
+        setShouldGoNext(true);
     }
 
     function fileJustDropIntoRegion(files: FileModel[]) {
         setFilesPhotoRooms([]);
-        setUploaded(false);
+        setShouldGoNext(false);
         setExistedFiles([]);
     }
 
@@ -40,18 +44,14 @@ function RoomSecondStepComponent({prevStep, nextStep}: Props) {
                                   existedFiles={existedFiles} fileJustDropIntoRegion={fileJustDropIntoRegion}/>
             <Divider/>
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                {<Button primary onClick={() => {
-                    prevStep();
-                }} icon labelPosition='left'>
+                <Button primary onClick={prevStep} icon labelPosition='left' type={'button'}>
                     Quay lại
                     <Icon name='arrow left'/>
-                </Button>}
-                {<Button primary onClick={() => {
-                    nextStep();
-                }} icon labelPosition='right' disabled={!uploaded}>
+                </Button>
+                <Button primary onClick={nextStep} icon labelPosition='right' disabled={!shouldGoNext} type={'button'}>
                     Tiếp tục
                     <Icon name='arrow right'/>
-                </Button>}
+                </Button>
             </div>
         </>
     );
