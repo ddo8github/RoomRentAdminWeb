@@ -3,10 +3,8 @@ import './roomnew.component.css';
 import StepperComponent from '../../../layout/stepper/stepper.component';
 import {useStore} from '../../../stores/stores';
 import {observer} from 'mobx-react-lite';
-import {Button, Header, Icon} from 'semantic-ui-react';
 import RoomFirstStepComponent from './roomsteps/room.firststep.component';
 import RoomSecondStepComponent from './roomsteps/room.secondstep.component';
-import {RoomInfo} from '../../../models/models';
 import RoomThirdStepComponent from './roomsteps/room.thirdstep.component';
 
 function RoomNewComponent() {

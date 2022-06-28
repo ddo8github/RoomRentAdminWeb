@@ -30,11 +30,12 @@ interface FileModel {
     S3FileName: string;
     File: File;
     Ext: string;
-    previewImage: string | undefined;
+    PreviewImage: string | undefined;
     Bucket: string;
     Key: string;
     Location: string;
-    error: string | undefined;
+    Error: string | undefined;
+    Desc: string;
 }
 
 interface StepperModel extends StepProps {
@@ -73,5 +74,5 @@ interface DataResultModel<T> {
 
 export type {
     UserLogin, SignoutModel, TokenModel, DataResultModel, RefreshTokenModel,
-    FileModel, S3FileModel, StepperModel, RoomInfo,
+    FileModel, S3FileModel, StepperModel, RoomInfo
 };

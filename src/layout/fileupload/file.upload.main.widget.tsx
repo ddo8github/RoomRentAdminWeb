@@ -6,28 +6,37 @@ import {Accept} from 'react-dropzone';
 import {FileModel} from '../../models/models';
 import {observer} from 'mobx-react-lite';
 
+
 interface Props {
     acceptFileType: Accept;
     uploadFiles: (files: FileModel[]) => void;
+    fileJustDropIntoRegion: (files: FileModel[]) => void;
     loading: boolean;
+    existedFiles: FileModel[];
 }
 
-function FileUploadMainWidget({acceptFileType, uploadFiles, loading}: Props) {
-    const [files, setFiles] = useState<FileModel[]>([]);
+function FileUploadMainWidget({acceptFileType, uploadFiles, loading, existedFiles, fileJustDropIntoRegion}: Props) {
+    const [files, setFiles] = useState<FileModel[]>(existedFiles.length > 0 ? existedFiles : []);
     const [uploaded, setUploaded] = useState<boolean>(false);
+    let timer: NodeJS.Timeout;
     useEffect(() => {
-        setUploaded(false);
+        // existedFiles.length > 0 => already uploaded
+        setUploaded(existedFiles.length > 0);
         return () => {
             // revokeObjectURL will clean the URL.createObjectURL
             files.forEach((file: any) => URL.revokeObjectURL(file.preview));
         };
-    }, [files]);
+    }, [files, existedFiles]);
 
     return (
         <>
             <div style={{width: '100%'}}>
                 <Header sub color={'teal'} content={'Chọn files'}/>
-                <FileWidgetDropzone setFiles={setFiles} acceptFileType={acceptFileType}/>
+                <FileWidgetDropzone setFiles={(files) => {
+                    setFiles(files);
+                    setUploaded(false);
+                    fileJustDropIntoRegion(files);
+                }} acceptFileType={acceptFileType}/>
             </div>
             {files && files.length > 0 &&
             <div>

@@ -12,3 +12,6 @@
     transform: translateY(-50%);
 }
 
+.login-input {
+    margin-bottom: 10px !important;
+}

@@ -31,8 +31,8 @@ function LoginComponent() {
                                     </Header.Content>
                                 </Header>
                                 <Field placeholder='Username' name='username'
-                                       style={{marginBottom: '10px !important'}}/>
-                                <Field placeholder='Password' name='password' style={{marginBottom: '10px !important'}}
+                                       className={'login-input'}/>
+                                <Field placeholder='Password' name='password' className={'login-input'}
                                        type='password'/>
                                 <ErrorMessage name={'error'} render={() => (
                                     <Label style={{marginBottom: '1.5em'}} basic color={'red'} content={errors.error}/>

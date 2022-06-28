@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, Divider, Grid, Header, Icon, Segment} from 'semantic-ui-react';
 import {Field, Form, Formik} from 'formik';
 import {Validations} from '../../../../utils/validation.schema';
@@ -53,7 +53,6 @@ function RoomFirstStepComponent({nextStep}: Props) {
                             <div style={{textAlign: 'right'}}>
                                 {<Button primary onClick={() => {
                                     roomStore.setRoomInfo(values);
-                                    console.log(roomStore.roomInfo);
                                     nextStep();
                                 }} icon labelPosition='right' type={'button'}
                                          disabled={!isValid}>

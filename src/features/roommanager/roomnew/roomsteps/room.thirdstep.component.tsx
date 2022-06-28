@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, Divider, Header, Icon} from 'semantic-ui-react';
+
 interface Props {
     finishStep: () => void,
     prevStep: () => void

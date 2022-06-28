@@ -1,45 +1,56 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Card, Image, Input, Label, Progress} from 'semantic-ui-react';
 import {FileModel} from '../../models/models';
+import {observer} from 'mobx-react-lite';
 
 interface Props {
     files: FileModel[];
 }
 
 function FileWidgetListPreview({files}: Props) {
+    const [percent, setPercent] = useState<number>(0);
     return (
         <>
             <div>
-                <Card.Group itemsPerRow={3}>
+                <Card.Group key={'cardGroup'} itemsPerRow={3}>
                     {
                         files.map((f, index) => {
                             return (
-                                <Card raised key={'imgUpload' + index.toString()} color={'orange'}>
-                                    <Image src={f.previewImage}
+                                <Card raised key={`cardImage${index.toString()}`} color={'orange'}>
+                                    <Image key={`imgMain${index.toString()}`} src={f.PreviewImage}
                                            style={{width: '100%', height: 'auto'}}/>
-                                    <Card.Content style={{position: 'relative', height: '180px'}}>
+                                    <Card.Content key={`cardContent${index.toString()}`}
+                                                  style={{position: 'relative', height: '180px'}}>
                                         <div style={{position: 'absolute', bottom: '0px', width: '100%'}}>
-                                            <Card.Header style={{wordBreak: 'break-word', width: '90%'}}>
+                                            <Card.Header key={`cardHeader${index.toString()}`}
+                                                         style={{wordBreak: 'break-word', width: '90%'}}>
                                                 <strong>{f.File.name}</strong>
                                             </Card.Header>
-                                            <Card.Meta><strong>Ngày tạo:</strong>
-                                                {new Date(f.File.lastModified)
-                                                    .toLocaleDateString('vi', {
-                                                        month: 'long',
-                                                        day: '2-digit',
-                                                        year: 'numeric',
-                                                        weekday: 'long'
-                                                    })}
+                                            <Card.Meta key={`cardMeta${index.toString()}`}>
+                                                <strong>Ngày tạo:</strong>
+                                                {
+                                                    new Date(f.File.lastModified)
+                                                        .toLocaleDateString('vi', {
+                                                            month: 'long',
+                                                            day: '2-digit',
+                                                            year: 'numeric',
+                                                            weekday: 'long'
+                                                        })
+                                                }
                                             </Card.Meta>
-                                            <Card.Description>
+                                            <Card.Description key={`cardDesc${index.toString()}`}>
                                                 <Input size={'mini'} key={'txtDesc' + index.toString()}
                                                        style={{width: '90%', marginBottom: '5px'}}
-                                                       placeholder={'Ghi chú'}/>
+                                                       placeholder={'Ghi chú'} type={'text'}
+                                                       onChange={(e) => f.Desc = e.target.value}/>
                                             </Card.Description>
-                                            <Card.Content extra style={{width: '90%'}}>
-                                                <Progress key={'progress' + index.toString()} percent={f.Percentage}
-                                                          progress={'percent'} autoSuccess={true} color={'green'}/>
-                                                {f.error && <Label color={'red'}>{f.error}</Label>}
+                                            <Card.Content extra style={{width: '90%'}}
+                                                          key={`cardContentExtra${index.toString()}`}>
+                                                <Progress key={`progress${index.toString()}`} percent={f.Percentage}
+                                                          progress={'percent'} success autoSuccess={true}
+                                                          color={'green'}/>
+                                                {f.Error && <Label key={`progressLabelError${index.toString()}`}
+                                                                   color={'red'}>{f.Error}</Label>}
                                             </Card.Content>
                                         </div>
                                     </Card.Content>
@@ -53,4 +64,4 @@ function FileWidgetListPreview({files}: Props) {
     );
 }
 
-export default FileWidgetListPreview;
+export default observer(FileWidgetListPreview);

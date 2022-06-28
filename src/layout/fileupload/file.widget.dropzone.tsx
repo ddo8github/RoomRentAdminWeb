@@ -27,7 +27,7 @@ function FileWidgetDropzone({setFiles, acceptFileType}: Props) {
     const onDrop = useCallback((acceptedFiles) => {
         const res = acceptedFiles.map((file: File) => {
             const fileModel: FileModel = {
-                previewImage: URL.createObjectURL(file),
+                PreviewImage: URL.createObjectURL(file),
                 File: file,
                 Ext: file.name.split('.').pop()!,
                 Size: file.size,
@@ -36,7 +36,8 @@ function FileWidgetDropzone({setFiles, acceptFileType}: Props) {
                 Key: '',
                 Location: '',
                 Bucket: '',
-                error: undefined
+                Error: undefined,
+                Desc: ''
             };
             return fileModel;
         });
