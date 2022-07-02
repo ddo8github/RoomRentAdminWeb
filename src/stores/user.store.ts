@@ -7,6 +7,7 @@ import {Constants} from '../config/constant';
 
 export default class UserStore {
     public user: TokenModel | null = null;
+    private dontRefreshToken:boolean = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -30,12 +31,14 @@ export default class UserStore {
 
     logout = async () => {
         try {
+            this.dontRefreshToken=true;
             store.commonStore.setAppLoaded(true, Constants.MSG_LOADING_APP);
             const res = await agent.Account.signout({Username: this.user?.Username});
             this.setUser(null);
             window.localStorage.removeItem('26ed014a');
             store.commonStore.setAppLoaded(false, '');
             store.commonStore.goToPage('/');
+            this.dontRefreshToken=false;
         } catch (e) {
             store.commonStore.setAppLoaded(false, '');
             throw e;
@@ -64,7 +67,7 @@ export default class UserStore {
 
     refreshToken = async () => {
         try {
-            if (this.user) {
+            if (this.user && this.user.RefreshToken && !this.dontRefreshToken) {
                 const refreshTokenModel: RefreshTokenModel = {
                     RefreshToken: this.user?.RefreshToken
                 };

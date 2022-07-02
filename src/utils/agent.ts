@@ -1,13 +1,22 @@
 import axios, {AxiosResponse} from 'axios';
 import {store} from '../stores/stores';
 import cryptor from './cryptor';
-import {DataResultModel, RefreshTokenModel, SignoutModel, TokenModel, UserLogin} from '../models/models';
+import {
+    DataResultModel,
+    District,
+    Province,
+    RefreshTokenModel,
+    SignoutModel,
+    TokenModel,
+    UserLogin, Ward
+} from '../models/models';
+import {Constants} from '../config/constant';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_ROOT;
 
 axios.interceptors.request.use((config) => {
     try {
-        const token = store.userStore.user?.AccessToken;
+        const token = store.userStore.user?.IdToken;
         if (token) {
             config.headers!.Authorization = `Bearer ${token}`;
         }
@@ -20,7 +29,7 @@ axios.interceptors.request.use((config) => {
 });
 
 axios.interceptors.response.use(async (res) => {
-    let ret:DataResultModel<any>;
+    let ret: DataResultModel<any>;
     try {
         ret = cryptor.deResponseData<DataResultModel<any>>(res.data);
     } catch (e) {
@@ -44,7 +53,7 @@ const responseBody = <T>(response: AxiosResponse<T>) => {
 };
 
 const requests = {
-    get: (url: string) => axios.get(url).then(responseBody),
+    get: <T>(url: string) => axios.get<T>(url).then(responseBody),
     post: <T>(url: string, body: any) => axios.post<T>(url, JSON.stringify(body)).then(responseBody),
     put: (url: string, body: any) => axios.put(url, body).then(responseBody),
     del: (url: string) => axios.delete(url).then(responseBody),
@@ -56,8 +65,15 @@ const Account = {
     refreshToken: (refreshtoken: RefreshTokenModel) => requests.post<DataResultModel<TokenModel>>('auth/3e5867c9', refreshtoken),
 };
 
+const Geography = {
+    listProvince: () => requests.get<DataResultModel<Province[]>>('province/3e5867c9'),
+    listDistrict: (provinceCode: string) => requests.get<DataResultModel<District[]>>(`province/82e81eac?provinceCode=${provinceCode}`),
+    listWard: (provinceCode: string, districtCode: string) => requests.get<DataResultModel<Ward[]>>(`province/1dcf5b07?provinceCode=${provinceCode}&districtCode=${districtCode}`)
+};
+
 const agent = {
-    Account
+    Account,
+    Geography
 };
 
 export default agent;

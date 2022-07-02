@@ -7,6 +7,8 @@ interface Props {
     name: string;
     options: any;
     label?: string;
+    isLoading: boolean;
+    onChange?: (value: any) => void;
 }
 
 function SelectInputCustom(props: Props) {
@@ -17,9 +19,16 @@ function SelectInputCustom(props: Props) {
             <Select options={props.options}
                     clearable
                     value={field.value || null}
-                    onChange={(event, data) => helpers.setValue(data.value)}
+                    onChange={(event, data) => {
+                        helpers.setValue(data.value);
+                        if (props.onChange) {
+                            props.onChange(data);
+                        }
+                    }}
                     onBlur={() => helpers.setTouched(true)}
                     placeholder={props.placeholder}
+                    loading={props.isLoading}
+                    disabled={props.isLoading}
             />
             {meta.touched && meta.error ? (<p style={{color: 'red'}}>{`* ${meta.error}`}</p>) : null}
         </Form.Field>

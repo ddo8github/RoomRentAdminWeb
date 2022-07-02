@@ -1,12 +1,14 @@
 import {makeAutoObservable, runInAction} from 'mobx';
 import {appHistory} from '../index';
-import {FileModel} from '../models/models';
+import {District, FileModel, Option, Province, Ward} from '../models/models';
 import {v4 as uuid} from 'uuid';
 import {S3} from 'aws-sdk';
 import {store} from './stores';
+import agent from '../utils/agent';
 
 export class CommonStore {
     public appLoaded: boolean = false;
+    public isDataLoading: boolean = false;
     public appLoadedContent: string = 'App Loading...';
     public uploadInProgress: boolean = false;
     public fileUploadCount: number = 0;
@@ -26,6 +28,10 @@ export class CommonStore {
         this.appLoaded = value;
         this.appLoadedContent = content;
     };
+
+    setDataLoading = (value: boolean) => {
+        this.isDataLoading = value;
+    }
 
     setFilesPhotoRooms = (files: FileModel[]) => {
         runInAction(() => {
@@ -84,4 +90,73 @@ export class CommonStore {
             this.setUploadPhotoStatus(true);
         }
     }
+
+    public getListProvinces = async (): Promise<Option<Province>[]> => {
+        try {
+            if (store.userStore.user) {
+                this.setDataLoading(true);
+                const res = await agent.Geography.listProvince();
+                const ret = res.Data?.map((m) => {
+                    const option: Option<Province> = {
+                        text: m.name,
+                        value: m,
+                        key: m.code.toString()
+                    };
+                    return option;
+                });
+                this.setDataLoading(false);
+                return ret ?? [];
+            } else {
+                return [];
+            }
+        } catch (e) {
+            throw e;
+        }
+    };
+
+    public getListDistrictByProvince = async (provinceCode: string): Promise<Option<District>[]> => {
+        try {
+            if (store.userStore.user) {
+                this.setDataLoading(true);
+                const res = await agent.Geography.listDistrict(provinceCode);
+                const ret = res.Data?.map((m) => {
+                    const option: Option<District> = {
+                        text: m.name,
+                        value: m,
+                        key: m.code.toString()
+                    };
+                    return option;
+                });
+                this.setDataLoading(false);
+                return ret ?? [];
+            } else {
+                return [];
+            }
+        } catch (e) {
+            throw e;
+        }
+    };
+
+    public getListWardByDistrict = async (provinceCode: string, districtCode: string): Promise<Option<Ward>[] | undefined> => {
+        try {
+            if (store.userStore.user) {
+                this.setDataLoading(true);
+                const res = await agent.Geography.listWard(provinceCode, districtCode);
+                const ret = res.Data?.map((m) => {
+                    const option: Option<Ward> = {
+                        text: m.name,
+                        value: m,
+                        key: m.code.toString()
+                    };
+                    return option;
+                });
+                this.setDataLoading(false);
+                return ret;
+            } else {
+                return [];
+            }
+        } catch (e) {
+            throw e;
+        }
+    };
 }

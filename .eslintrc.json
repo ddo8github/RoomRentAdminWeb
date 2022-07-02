@@ -32,6 +32,8 @@
     "brace-style": "off",
     "no-invalid-this": "off",
     "space-before-function-paren": "off",
+    "camelcase": "off",
+    "new-cap": "off",
     "jsx-quotes": [
       "error",
       "prefer-single"

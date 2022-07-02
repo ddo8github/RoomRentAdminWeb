@@ -57,8 +57,9 @@ interface RoomInfo {
     price: number;
     square: number;
     utilities: string[];
-    province: string;
-    district: string;
+    province: Province | null;
+    district: District | null;
+    ward: Ward | null;
     address: string;
 }
 
@@ -72,7 +73,38 @@ interface DataResultModel<T> {
     ErrorNumber: number | undefined;
 }
 
+interface Province {
+    name: string;
+    code: number;
+    division_type: string;
+    codename: string;
+    phone_code: number;
+}
+
+interface Ward {
+    name: string;
+    code: number;
+    codename: string;
+    division_type: string;
+    short_codename: string;
+}
+
+interface District {
+    name: string;
+    code: number;
+    codename: string;
+    division_type: string;
+    short_codename: string;
+}
+
+interface Option<T> {
+    text: string;
+    value: T;
+    key: string;
+}
+
 export type {
     UserLogin, SignoutModel, TokenModel, DataResultModel, RefreshTokenModel,
-    FileModel, S3FileModel, StepperModel, RoomInfo
+    FileModel, S3FileModel, StepperModel, RoomInfo, Province, Ward, District,
+    Option
 };
