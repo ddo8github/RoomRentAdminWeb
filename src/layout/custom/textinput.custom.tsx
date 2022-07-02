@@ -6,7 +6,6 @@ interface Props {
     placeholder: string;
     name: string;
     labelabove: string;
-    isnumber: number;
 }
 
 function TextInputCustom(props: Props) {
@@ -14,7 +13,7 @@ function TextInputCustom(props: Props) {
     return (
         <Form.Field error={meta.touched && !!meta.error}>
             <label dangerouslySetInnerHTML={{__html: props.labelabove}}></label>
-            <Input {...field} {...props} type={props.isnumber === 1 ? 'number' : 'text'} size={'mini'}/>
+            <Input {...field} {...props} type={'text'} size={'mini'}/>
             {meta.touched && meta.error ?
                 (<p style={{color: 'red'}} dangerouslySetInnerHTML={{__html: `* ${meta.error}`}}/>) : null}
         </Form.Field>

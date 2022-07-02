@@ -8,9 +8,9 @@ import {
     RefreshTokenModel,
     SignoutModel,
     TokenModel,
-    UserLogin, Ward
+    UserLogin,
+    Ward
 } from '../models/models';
-import {Constants} from '../config/constant';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_ROOT;
 

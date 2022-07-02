@@ -1,4 +1,5 @@
 import {StepProps} from 'semantic-ui-react/dist/commonjs/elements/Step/Step';
+import {SemanticICONS} from 'semantic-ui-react';
 
 interface UserLogin {
     username: string;
@@ -57,10 +58,16 @@ interface RoomInfo {
     price: number;
     square: number;
     utilities: string[];
-    province: Province | null;
-    district: District | null;
-    ward: Ward | null;
+    province: string;
+    district: string;
+    ward: string;
     address: string;
+}
+
+interface RoomUtility{
+    text: string;
+    value: string;
+    icon: SemanticICONS;
 }
 
 interface DataResultModel<T> {
@@ -97,14 +104,13 @@ interface District {
     short_codename: string;
 }
 
-interface Option<T> {
+interface Option {
     text: string;
-    value: T;
-    key: string;
+    value: string;
 }
 
 export type {
     UserLogin, SignoutModel, TokenModel, DataResultModel, RefreshTokenModel,
     FileModel, S3FileModel, StepperModel, RoomInfo, Province, Ward, District,
-    Option
+    Option, RoomUtility
 };

@@ -1,3 +1,5 @@
+import {RoomUtility} from '../models/models';
+
 const NAV_ROOM_COMPANY = '/roomcom';
 const NAV_PARTNER = '/partner';
 const NAV_ROM_NEW = '/roomnew';
@@ -16,15 +18,19 @@ const ROOM_TYPE_OPTIONS = [
     {text: 'Nguyên căn', value: 'Nguyên căn'}
 ];
 
-const ROOM_UTILITIES = [
-    {text: 'Wifi', value: 'Wifi'},
-    {text: 'WC riêng', value: 'WC riêng'},
-    {text: 'Giữ xe', value: 'Giữ xe'},
-    {text: 'Tự do', value: 'Tự do'},
-    {text: 'Bếp', value: 'Bếp'},
-    {text: 'Điều hòa', value: 'Điều hòa'},
-    {text: 'Tủ lạnh', value: 'Tủ lạnh'},
-    {text: 'Máy giặt', value: 'Máy giặt'},
+const ROOM_UTILITIES: RoomUtility[] = [
+    {text: 'Wifi', value: 'Wifi', icon: 'wifi'},
+    {text: 'WC riêng', value: 'WC riêng', icon: 'bath'},
+    {text: 'Giữ xe', value: 'Giữ xe', icon: 'motorcycle'},
+    {text: 'Tự do', value: 'Tự do', icon: 'history'},
+    {text: 'Bếp', value: 'Bếp', icon: 'food'},
+    {text: 'Điều hòa', value: 'Điều hòa', icon: 'snowflake'},
+    {text: 'Tủ lạnh', value: 'Tủ lạnh', icon: 'calendar'},
+    {text: 'Máy giặt', value: 'Máy giặt', icon: 'calendar outline'},
+    {text: 'TV', value: 'TV', icon: 'tv'},
+    {text: 'Sân vườn', value: 'Sân vườn', icon: 'tree'},
+    {text: 'Ban công', value: 'Ban công', icon: 'sun outline'},
+    {text: 'Gần chợ', value: 'Gần chợ', icon: 'shopping cart'},
 ];
 
 const ADMIN_CONTACT_MESSAGE = 'Đã có sự cố xảy ra. Vui lòng liên hệ Admin';

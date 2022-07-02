@@ -1,6 +1,6 @@
 import {makeAutoObservable, runInAction} from 'mobx';
 import {appHistory} from '../index';
-import {District, FileModel, Option, Province, Ward} from '../models/models';
+import {FileModel, Option} from '../models/models';
 import {v4 as uuid} from 'uuid';
 import {S3} from 'aws-sdk';
 import {store} from './stores';
@@ -91,16 +91,15 @@ export class CommonStore {
         }
     }
 
-    public getListProvinces = async (): Promise<Option<Province>[]> => {
+    public getListProvinces = async (): Promise<Option[]> => {
         try {
             if (store.userStore.user) {
                 this.setDataLoading(true);
                 const res = await agent.Geography.listProvince();
                 const ret = res.Data?.map((m) => {
-                    const option: Option<Province> = {
+                    const option: Option = {
                         text: m.name,
-                        value: m,
-                        key: m.code.toString()
+                        value: m.code.toString()
                     };
                     return option;
                 });
@@ -114,16 +113,15 @@ export class CommonStore {
         }
     };
 
-    public getListDistrictByProvince = async (provinceCode: string): Promise<Option<District>[]> => {
+    public getListDistrictByProvince = async (provinceCode: string): Promise<Option[]> => {
         try {
             if (store.userStore.user) {
                 this.setDataLoading(true);
                 const res = await agent.Geography.listDistrict(provinceCode);
                 const ret = res.Data?.map((m) => {
-                    const option: Option<District> = {
+                    const option: Option = {
                         text: m.name,
-                        value: m,
-                        key: m.code.toString()
+                        value: m.code.toString()
                     };
                     return option;
                 });
@@ -137,21 +135,20 @@ export class CommonStore {
         }
     };
 
-    public getListWardByDistrict = async (provinceCode: string, districtCode: string): Promise<Option<Ward>[] | undefined> => {
+    public getListWardByDistrict = async (provinceCode: string, districtCode: string): Promise<Option[]> => {
         try {
             if (store.userStore.user) {
                 this.setDataLoading(true);
                 const res = await agent.Geography.listWard(provinceCode, districtCode);
                 const ret = res.Data?.map((m) => {
-                    const option: Option<Ward> = {
+                    const option: Option = {
                         text: m.name,
-                        value: m,
-                        key: m.code.toString()
+                        value: m.code.toString()
                     };
                     return option;
                 });
                 this.setDataLoading(false);
-                return ret;
+                return ret ?? [];
             } else {
                 return [];
             }

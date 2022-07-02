@@ -1,4 +1,4 @@
-import {District, FileModel, Option, Province, RoomInfo, StepperModel, Ward} from '../models/models';
+import {FileModel, RoomInfo, StepperModel} from '../models/models';
 import {makeAutoObservable} from 'mobx';
 
 export default class RoomStore {
