@@ -5,7 +5,7 @@ import {
     DataResultModel,
     District,
     Province,
-    RefreshTokenModel,
+    RefreshTokenModel, RoomComViewModel,
     SignoutModel,
     TokenModel,
     UserLogin,
@@ -71,9 +71,14 @@ const Geography = {
     listWard: (provinceCode: string, districtCode: string) => requests.get<DataResultModel<Ward[]>>(`province/1dcf5b07?provinceCode=${provinceCode}&districtCode=${districtCode}`)
 };
 
+const Room = {
+    insertNewRoomCompany: (room: RoomComViewModel) => requests.post<DataResultModel<Boolean>>('room/269133c5', room)
+};
+
 const agent = {
     Account,
-    Geography
+    Geography,
+    Room
 };
 
 export default agent;

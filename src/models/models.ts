@@ -33,7 +33,6 @@ interface FileModel {
     Ext: string;
     PreviewImage: string | undefined;
     Bucket: string;
-    Key: string;
     Location: string;
     Error: string | undefined;
     Desc: string;
@@ -43,31 +42,80 @@ interface StepperModel extends StepProps {
 
 }
 
-interface S3FileModel {
-    Bucket: string;
-    Key: string;
-    Location: string;
-}
-
 interface SignoutModel {
     Username: string | undefined;
 }
 
 interface RoomInfo {
-    roomType: string;
-    price: number;
-    square: number;
-    utilities: string[];
-    province: string;
-    district: string;
-    ward: string;
-    address: string;
+    [key: string]: any;
+
+    Id: number | null;
+    Utilities: string[];
+    Roomnumber: string;
+    Desc: string;
+    Display: number;
+    Wifi: number;
+    Personalwc: number;
+    Parking: number;
+    Freetime: number;
+    Kitchen: number;
+    Aircon: number;
+    Fridge: number;
+    Washingmachine: number;
+    Type: string;
+    Tv: number;
+    Garden: number;
+    Balcony: number;
+    Nearmarket: number;
+    Price: string;
+    Square: string;
+    Street: string;
+    District: string;
+    DistrictCode: string;
+    City: string;
+    CityCode: string;
+    Ward: string;
+    WardCode: string;
+    roomComImgViewModels: RoomComImgViewModel[];
 }
 
-interface RoomUtility{
+interface RoomComViewModel {
+    Roomnumber: string;
+    Street: string;
+    Ward: string;
+    District: string;
+    City: string;
+    Desc: string;
+    Display: number;
+    Wifi: number;
+    Personalwc: number;
+    Parking: number;
+    Freetime: number;
+    Kitchen: number;
+    Aircon: number;
+    Fridge: number;
+    Washingmachine: number;
+    Type: string;
+    Tv: number;
+    Garden: number;
+    Balcony: number;
+    Nearmarket: number;
+    Price: number;
+    Square: number;
+    roomComImgViewModels: RoomComImgViewModel[];
+}
+
+interface RoomComImgViewModel {
+    Roomdocurl: string;
+    Doctype: string;
+    Desc: string;
+}
+
+interface RoomUtility {
     text: string;
     value: string;
     icon: SemanticICONS;
+    nameField: string;
 }
 
 interface DataResultModel<T> {
@@ -111,6 +159,6 @@ interface Option {
 
 export type {
     UserLogin, SignoutModel, TokenModel, DataResultModel, RefreshTokenModel,
-    FileModel, S3FileModel, StepperModel, RoomInfo, Province, Ward, District,
-    Option, RoomUtility
+    FileModel, StepperModel, RoomInfo, Province, Ward, District,
+    Option, RoomUtility, RoomComViewModel, RoomComImgViewModel
 };

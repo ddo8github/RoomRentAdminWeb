@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FileModel} from '../../../../models/models';
+import {FileModel, RoomComImgViewModel} from '../../../../models/models';
 import {useStore} from '../../../../stores/stores';
 import FileUploadMainWidget from '../../../../layout/fileupload/file.upload.main.widget';
 import {Button, Divider, Icon} from 'semantic-ui-react';
@@ -13,7 +13,8 @@ interface Props {
 function RoomSecondStepComponent({prevStep, nextStep}: Props) {
     const [shouldGoNext, setShouldGoNext] = useState<boolean>(false);
     const {
-        commonStore: {uploadInProgress, uploadFile, setFilesPhotoRooms, filesPhotoRooms}
+        commonStore: {uploadInProgress, uploadFile, setFilesPhotoRooms, filesPhotoRooms},
+        roomStore: {roomInfo}
     } = useStore();
 
     const [existedFiles, setExistedFiles] = useState<FileModel[]>(filesPhotoRooms);
@@ -37,6 +38,16 @@ function RoomSecondStepComponent({prevStep, nextStep}: Props) {
         setExistedFiles([]);
     }
 
+    function setRoomComImg() {
+        const res = filesPhotoRooms.map((m) => {
+            const roomImg: RoomComImgViewModel = {Desc: m.Desc, Doctype: m.Ext, Roomdocurl: m.S3FileName};
+            return roomImg;
+        });
+        if (roomInfo) {
+            roomInfo.roomComImgViewModels = res;
+        }
+    }
+
     return (
         <>
             <FileUploadMainWidget acceptFileType={{'image/png': ['.png', '.jpg', '.jpeg']}}
@@ -44,11 +55,16 @@ function RoomSecondStepComponent({prevStep, nextStep}: Props) {
                                   existedFiles={existedFiles} fileJustDropIntoRegion={fileJustDropIntoRegion}/>
             <Divider/>
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <Button primary onClick={prevStep} icon labelPosition='left' type={'button'}>
+                <Button primary onClick={() => {
+                    prevStep();
+                }} icon labelPosition='left' type={'button'}>
                     Quay lại
                     <Icon name='arrow left'/>
                 </Button>
-                <Button primary onClick={nextStep} icon labelPosition='right' disabled={!shouldGoNext} type={'button'}>
+                <Button primary onClick={()=> {
+                    setRoomComImg();
+                    nextStep();
+                }} icon labelPosition='right' disabled={!shouldGoNext} type={'button'}>
                     Tiếp tục
                     <Icon name='arrow right'/>
                 </Button>

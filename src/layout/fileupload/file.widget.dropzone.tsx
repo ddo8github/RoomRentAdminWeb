@@ -33,7 +33,6 @@ function FileWidgetDropzone({setFiles, acceptFileType}: Props) {
                 Size: file.size,
                 S3FileName: '',
                 Percentage: 0,
-                Key: '',
                 Location: '',
                 Bucket: '',
                 Error: undefined,

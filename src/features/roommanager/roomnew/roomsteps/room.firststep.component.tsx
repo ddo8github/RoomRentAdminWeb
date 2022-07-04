@@ -22,34 +22,68 @@ function RoomFirstStepComponent({nextStep}: Props) {
         commonStore: {getListProvinces, getListDistrictByProvince, getListWardByDistrict, isDataLoading}
     } = useStore();
     const [roomInfo] = useState<RoomInfo>({
-        roomType: '', price: 0, utilities: [], province: '', ward: '', address: '', district: '', square: 0
+        Type: '',
+        Price: '0',
+        Utilities: [],
+        Street: '',
+        City: '',
+        CityCode: '',
+        Ward: '',
+        WardCode: '',
+        District: '',
+        DistrictCode: '',
+        Square: '0',
+        Aircon: 0,
+        Balcony: 0,
+        Desc: '',
+        Display: 1,
+        Roomnumber: '',
+        roomComImgViewModels: [],
+        Freetime: 0,
+        Fridge: 0,
+        Id: null,
+        Garden: 0,
+        Kitchen: 0,
+        Nearmarket: 0,
+        Parking: 0,
+        Tv: 0,
+        Personalwc: 0,
+        Washingmachine: 0,
+        Wifi: 0
     });
     const [provinces, setProvinces] = useState<Option[]>([]);
     const [districts, setDistricts] = useState<Option[]>([]);
     const [wards, setWards] = useState<Option[]>([]);
     const [target, setTarget] = useState('');
     const [provinceCode, setProvinceCode] = useState('');
+    const [{cityText, districtText, wardText}, setProDisWardText] = useState({
+        cityText: '',
+        districtText: '',
+        wardText: ''
+    });
     useEffect(() => {
         setTarget('provinceLoad');
         (async () => {
             setProvinces(await getListProvinces());
-            if (roomStore.roomInfo?.province && roomStore.roomInfo?.district) {
-                setDistricts(await getListDistrictByProvince(roomStore.roomInfo?.province));
-                if (roomStore.roomInfo?.ward) {
-                    setWards(await getListWardByDistrict(roomStore.roomInfo?.province, roomStore.roomInfo?.district));
+            if (roomStore.roomInfo && roomStore.roomInfo.CityCode && roomStore.roomInfo.DistrictCode) {
+                setDistricts(await getListDistrictByProvince(roomStore.roomInfo.CityCode));
+                if (roomStore.roomInfo.WardCode) {
+                    setWards(await getListWardByDistrict(roomStore.roomInfo.CityCode, roomStore.roomInfo.DistrictCode));
                 }
             }
-            console.warn = () => {
-                console.clear();
-            };
         })();
     }, [setProvinces]);
 
-    async function getDistrictByProvince(provinceCode: string) {
+    async function getDistrictByProvince(data: any) {
         try {
             setDistricts([]);
             setWards([]);
+            const provinceCode = data.value;
             if (provinceCode) {
+                const res = data.options.find((f: any) => f.value === provinceCode);
+                if (res) {
+                    setProDisWardText({cityText: res.text, districtText: '', wardText: ''});
+                }
                 setProvinceCode(provinceCode);
                 setTarget('districtLoad');
                 setDistricts(await getListDistrictByProvince(provinceCode));
@@ -59,19 +93,29 @@ function RoomFirstStepComponent({nextStep}: Props) {
         }
     }
 
-    async function getWardByDistrict(districtCode: string) {
+    async function getWardByDistrict(data: any) {
         try {
-            console.warn = () => {
-                console.clear();
-            };
             setTarget('wardLoad');
+            const districtCode = data.value;
             if (districtCode && provinceCode) {
+                const res = data.options.find((f: any) => f.value === districtCode);
+                if (res) {
+                    setProDisWardText({cityText: cityText, districtText: res.text, wardText: ''});
+                }
                 setWards(await getListWardByDistrict(provinceCode, districtCode));
             } else {
                 setWards([]);
             }
         } catch (e) {
             toast.error(Constants.ADMIN_CONTACT_MESSAGE);
+        }
+    }
+
+    function getWardName(data: any) {
+        const wardCode = data.value;
+        const res = data.options.find((f: any) => f.value === wardCode);
+        if (res) {
+            setProDisWardText({cityText: cityText, districtText: districtText, wardText: res.text});
         }
     }
 
@@ -85,21 +129,25 @@ function RoomFirstStepComponent({nextStep}: Props) {
                 {({values, isValid}) => {
                     return (
                         <Form className={'ui form'} autoComplete={'off'}>
-                            <Grid relaxed columns={3}>
+                            <Grid relaxed columns={2}>
                                 <Grid.Column>
                                     <SelectInputCustom options={Constants.ROOM_TYPE_OPTIONS}
                                                        placeholder={'Chọn loại phòng'}
-                                                       label={'Loại phòng'} name={'roomType'}
+                                                       label={'Loại phòng'} name={'Type'}
                                                        isLoading={false}/>
                                 </Grid.Column>
                                 <Grid.Column>
-                                    <NumericTextbox key={'txtPrice'} placeholder={'Giá phòng (VND)'} name={'price'}
+                                    <NumericTextbox key={'txtPrice'} placeholder={'Giá phòng (VND)'} name={'Price'}
                                                     labelabove={'Giá phòng (VND)'}
                                     />
                                 </Grid.Column>
                                 <Grid.Column>
-                                    <NumericTextbox key={'txtSquare'} placeholder={'Diện tích'} name={'square'}
-                                                     labelabove={'Diện tích (m<sup>2</sup>)'}/>
+                                    <NumericTextbox key={'txtSquare'} placeholder={'Diện tích'} name={'Square'}
+                                                    labelabove={'Diện tích (m<sup>2</sup>)'}/>
+                                </Grid.Column>
+                                <Grid.Column>
+                                    <TextInputCustom key={'txtRoomNumber'} placeholder={'Tên/Số Phòng'}
+                                                     name={'Roomnumber'} labelabove={'Tên/Số Phòng'}/>
                                 </Grid.Column>
                             </Grid>
                             <div>
@@ -109,27 +157,28 @@ function RoomFirstStepComponent({nextStep}: Props) {
                                             <Grid.Column>
                                                 <SelectInputCustom options={provinces}
                                                                    placeholder={'Chọn tỉnh thành'}
-                                                                   label={'Tỉnh/TP'} name={'province'}
+                                                                   label={'Tỉnh/TP'} name={'CityCode'}
                                                                    isLoading={target === ('provinceLoad') && isDataLoading}
-                                                                   onChange={(data: any) => getDistrictByProvince(data.value)}/>
+                                                                   onChange={(data: any) => getDistrictByProvince(data)}/>
                                             </Grid.Column>
-                                            {values.province &&
+                                            {values.CityCode &&
                                             <Grid.Column>
                                                 <SelectInputCustom options={districts} placeholder={'Chọn quận huyện'}
-                                                                   label={'Quận/Huyện'} name={'district'}
+                                                                   label={'Quận/Huyện'} name={'DistrictCode'}
                                                                    isLoading={target === ('districtLoad') && isDataLoading}
-                                                                   onChange={(data: any) => getWardByDistrict(data.value)}/>
+                                                                   onChange={(data: any) => getWardByDistrict(data)}/>
                                             </Grid.Column>}
-                                            {values.province && values.district &&
+                                            {values.CityCode && values.DistrictCode &&
                                             <Grid.Column>
                                                 <SelectInputCustom options={wards} placeholder={'Chọn phường xã'}
-                                                                   label={'Phường/Xã'} name={'ward'}
-                                                                   isLoading={target === ('wardLoad') && isDataLoading}/>
+                                                                   label={'Phường/Xã'} name={'WardCode'}
+                                                                   isLoading={target === ('wardLoad') && isDataLoading}
+                                                                   onChange={(data: any) => getWardName(data)}/>
                                             </Grid.Column>}
-                                            {values.province && values.district && values.ward &&
+                                            {values.CityCode && values.DistrictCode && values.WardCode &&
                                             <Grid.Column>
                                                 <TextInputCustom key={'txtAddress'} placeholder={'Số nhà & tên đường'}
-                                                                 name={'address'} labelabove={'Số nhà và tên đường'}/>
+                                                                 name={'Street'} labelabove={'Số nhà và tên đường'}/>
                                             </Grid.Column>}
                                         </Grid>
                                 }
@@ -141,7 +190,7 @@ function RoomFirstStepComponent({nextStep}: Props) {
                                         return (
                                             <Grid.Column key={`rowUtilities${index}`}>
                                                 <div key={`divUtilities${index}`} className={'ui checkbox'}>
-                                                    <Field type={'checkbox'} name={'utilities'} value={m.value}/>
+                                                    <Field type={'checkbox'} name={'Utilities'} value={m.nameField}/>
                                                     <label><Icon color={'blue'} name={m.icon}/><strong>{m.text}</strong></label>
                                                 </div>
                                             </Grid.Column>
@@ -152,6 +201,9 @@ function RoomFirstStepComponent({nextStep}: Props) {
                             <Divider/>
                             <div style={{textAlign: 'right'}}>
                                 {isValid && <Button primary onClick={() => {
+                                    values.City = cityText;
+                                    values.District = districtText;
+                                    values.Ward = wardText;
                                     roomStore.setRoomInfo(values);
                                     nextStep();
                                 }} icon labelPosition='right' type={'button'}

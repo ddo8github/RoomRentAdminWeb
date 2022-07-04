@@ -1,22 +1,32 @@
 import React, {useState} from 'react';
 import './roomnew.component.css';
 import StepperComponent from '../../../layout/stepper/stepper.component';
-import {useStore} from '../../../stores/stores';
+import {store, useStore} from '../../../stores/stores';
 import {observer} from 'mobx-react-lite';
 import RoomFirstStepComponent from './roomsteps/room.firststep.component';
 import RoomSecondStepComponent from './roomsteps/room.secondstep.component';
 import RoomThirdStepComponent from './roomsteps/room.thirdstep.component';
+import {toast} from 'react-toastify';
+import {Constants} from '../../../config/constant';
 
 function RoomNewComponent() {
-    const {roomStore: {roomSteppers, setRoomInfo}} = useStore();
+    const {roomStore: {roomSteppers, insertNewCompanyRoom}, commonStore: {setAppLoaded, goToPage}} = useStore();
     const [step, setStep] = useState<number>(1);
 
     function nextStep() {
         setStep(step < 3 ? step + 1 : step);
     }
 
-    function finishStep() {
-
+    async function finishStep() {
+        try {
+            setAppLoaded(true, 'Đang lưu dữ liệu...');
+            await insertNewCompanyRoom();
+            goToPage(Constants.NAV_ROOM_COMPANY);
+            setAppLoaded(false, '');
+        } catch (e: any) {
+            setAppLoaded(false, '');
+            toast.error(e.Message);
+        }
     }
 
     function prevStep() {
@@ -29,7 +39,7 @@ function RoomNewComponent() {
         });
         switch (step) {
             case 1:
-                return (<RoomFirstStepComponent nextStep={nextStep} />);
+                return (<RoomFirstStepComponent nextStep={nextStep}/>);
             case 2:
                 return (<RoomSecondStepComponent nextStep={nextStep} prevStep={prevStep}/>);
             case 3:

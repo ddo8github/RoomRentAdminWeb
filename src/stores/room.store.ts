@@ -1,5 +1,8 @@
-import {FileModel, RoomInfo, StepperModel} from '../models/models';
+import {FileModel, RoomComViewModel, RoomInfo, StepperModel} from '../models/models';
 import {makeAutoObservable} from 'mobx';
+import agent from '../utils/agent';
+import {Constants} from '../config/constant';
+import {store} from './stores';
 
 export default class RoomStore {
     public roomSteppers: StepperModel[] = [
@@ -25,16 +28,53 @@ export default class RoomStore {
             active: false
         }
     ];
-
     public roomInfo: RoomInfo | null = null;
     public filesPreparedUpload: FileModel[] = [];
 
     setRoomInfo = (roomInfo: RoomInfo) => {
+        roomInfo.Utilities.forEach((f) => {
+            roomInfo[f] = 1;
+        });
         this.roomInfo = roomInfo;
     }
 
     setFilesPreparedUpload = (fileModel: FileModel[]) => {
         this.filesPreparedUpload = fileModel;
+    }
+
+    insertNewCompanyRoom = async () => {
+        try {
+            if (this.roomInfo) {
+                const room: RoomComViewModel = {
+                    Aircon: this.roomInfo.Aircon,
+                    Balcony: this.roomInfo.Balcony,
+                    City: this.roomInfo.City,
+                    Desc: this.roomInfo.Desc,
+                    District: this.roomInfo.District,
+                    Display: 1,
+                    Freetime: this.roomInfo.Freetime,
+                    Fridge: this.roomInfo.Fridge,
+                    Garden: this.roomInfo.Garden,
+                    Kitchen: this.roomInfo.Kitchen,
+                    Nearmarket: this.roomInfo.Nearmarket,
+                    Parking: this.roomInfo.Parking,
+                    Personalwc: this.roomInfo.Personalwc,
+                    Price: parseInt(this.roomInfo.Price.replaceAll(',', ''), 10),
+                    roomComImgViewModels: this.roomInfo.roomComImgViewModels,
+                    Roomnumber: this.roomInfo.Roomnumber,
+                    Square: parseInt(this.roomInfo.Square.replaceAll(',', ''), 10),
+                    Tv: this.roomInfo.Tv,
+                    Ward: this.roomInfo.Ward,
+                    Street: this.roomInfo.Street,
+                    Type: this.roomInfo.Type,
+                    Washingmachine: this.roomInfo.Washingmachine,
+                    Wifi: this.roomInfo.Wifi
+                };
+                await agent.Room.insertNewRoomCompany(room);
+            }
+        } catch (e) {
+            throw new Error(Constants.CANNOT_SAVE_DATA('insertNewCompanyRoom'));
+        }
     }
 
     constructor() {
