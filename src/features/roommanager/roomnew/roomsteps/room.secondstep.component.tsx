@@ -50,9 +50,10 @@ function RoomSecondStepComponent({prevStep, nextStep}: Props) {
 
     return (
         <>
-            <FileUploadMainWidget acceptFileType={{'image/png': ['.png', '.jpg', '.jpeg']}}
-                                  uploadFiles={handlePhotoUpload} loading={uploadInProgress}
-                                  existedFiles={existedFiles} fileJustDropIntoRegion={fileJustDropIntoRegion}/>
+            <FileUploadMainWidget
+                acceptFileType={{'image/png': ['.png', '.jpg', '.jpeg', '.mp4', '.MP4']}}
+                uploadFiles={handlePhotoUpload} loading={uploadInProgress}
+                existedFiles={existedFiles} fileJustDropIntoRegion={fileJustDropIntoRegion}/>
             <Divider/>
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
                 <Button primary onClick={() => {
@@ -61,13 +62,15 @@ function RoomSecondStepComponent({prevStep, nextStep}: Props) {
                     Quay lại
                     <Icon name='arrow left'/>
                 </Button>
-                <Button primary onClick={()=> {
-                    setRoomComImg();
-                    nextStep();
-                }} icon labelPosition='right' disabled={!shouldGoNext} type={'button'}>
-                    Tiếp tục
-                    <Icon name='arrow right'/>
-                </Button>
+                {
+                    shouldGoNext ? <Button primary onClick={() => {
+                        setRoomComImg();
+                        nextStep();
+                    }} icon labelPosition='right' type={'button'}>
+                        Tiếp tục
+                        <Icon name='arrow right'/>
+                    </Button> : <div/>
+                }
             </div>
         </>
     );

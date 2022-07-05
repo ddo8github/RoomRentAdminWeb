@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Card, Image, Input, Label, Progress} from 'semantic-ui-react';
+import {Card, Image, Input, Label, Progress, Segment} from 'semantic-ui-react';
 import {FileModel} from '../../models/models';
+import ReactPlayer from 'react-player';
 import {observer} from 'mobx-react-lite';
 
 interface Props {
@@ -26,8 +27,14 @@ function FileWidgetListPreview({files}: Props) {
                         files.map((f, index) => {
                             return (
                                 <Card raised key={`cardImage${index.toString()}`} color={'orange'}>
-                                    <Image key={`imgMain${index.toString()}`} src={f.PreviewImage}
-                                           style={{width: '100%', height: 'auto'}}/>
+                                    {f.Ext !== 'mp4' ?
+                                        <Image key={`imgMain${index.toString()}`} src={f.PreviewImage}
+                                               style={{width: '100%', height: 'auto'}}/> :
+                                        <ReactPlayer key={`'videoFileControl'${index}`}
+                                                     url={f.PreviewImage} muted controls light={false}
+                                                     width={'100%'}
+                                                     config={{file: {attributes: {controlsList: 'nodownload'}}}}
+                                                     onContextMenu={(e: any) => e.preventDefault()}/>}
                                     <Card.Content key={`cardContent${index.toString()}`}
                                                   style={{position: 'relative', height: '180px'}}>
                                         <div style={{position: 'absolute', bottom: '0px', width: '100%'}}>
@@ -51,6 +58,7 @@ function FileWidgetListPreview({files}: Props) {
                                                 <Input size={'mini'} key={'txtDesc' + index.toString()}
                                                        style={{width: '90%', marginBottom: '5px'}}
                                                        placeholder={'Ghi chú'} type={'text'}
+                                                       value={f.Desc}
                                                        onChange={(e) => f.Desc = e.target.value}/>
                                             </Card.Description>
                                             <Card.Content extra style={{width: '90%'}}

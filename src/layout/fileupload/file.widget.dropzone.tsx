@@ -3,6 +3,8 @@ import {Header, Icon} from 'semantic-ui-react';
 import {Accept, useDropzone} from 'react-dropzone';
 import {FileModel} from '../../models/models';
 import {observer} from 'mobx-react-lite';
+import {toast} from 'react-toastify';
+import {Constants} from '../../config/constant';
 
 interface Props {
     acceptFileType: Accept;
@@ -40,10 +42,31 @@ function FileWidgetDropzone({setFiles, acceptFileType}: Props) {
             };
             return fileModel;
         });
-        setFiles(res);
+        if (res.length < 3) {
+            setFiles([]);
+            toast.error(Constants.SELECT_AT_LEAST(3));
+        } else {
+            removeRedundancyVideo(res);
+            setFiles(res);
+        }
     }, [setFiles]);
 
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop, accept: acceptFileType});
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({
+        onDrop,
+        accept: acceptFileType,
+        maxSize: 10485760,
+        maxFiles: 10
+    });
+
+    function removeRedundancyVideo(files: FileModel[]) {
+        const videos = files.filter((f) => f.Ext.toLowerCase() === 'mp4');
+        if (videos.length > 1) {
+            const index = files.indexOf(videos[1], 0);
+            if (index > -1) {
+                files.splice(index, 1);
+            }
+        }
+    }
 
     return (
         <div {...getRootProps()} style={isDragActive ? {...dzStyle, ...dzActive} : dzStyle}>

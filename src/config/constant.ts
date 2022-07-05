@@ -35,6 +35,7 @@ const ROOM_UTILITIES: RoomUtility[] = [
 
 const ADMIN_CONTACT_MESSAGE = 'Đã có sự cố xảy ra. Vui lòng liên hệ Admin';
 const CANNOT_SAVE_DATA = (feature: string) => `Đã có sự cố xảy ra. Chức năng ${feature} không thực hiện được. Vui lòng liên hệ Admin`;
+const SELECT_AT_LEAST = (minAmount: number) => `Chọn ít nhất ${minAmount} files`;
 
 const VALIDATION_MESSAGE = {
     MANDATORY: (field: string) => `Thiếu thông tin ${field}`,
@@ -47,5 +48,5 @@ export const Constants = {
     NAV_ROOM_COMPANY, NAV_PARTNER, NAV_ROM_NEW, MSG_LOADING_APP,
     ROOM_COMPANY, PARTNER, ROM_NEW, TIME_OUT_SECOND,
     ROOM_TYPE_OPTIONS, ROOM_UTILITIES, API_LIST_PROVINCES,
-    ADMIN_CONTACT_MESSAGE, VALIDATION_MESSAGE, CANNOT_SAVE_DATA
+    ADMIN_CONTACT_MESSAGE, VALIDATION_MESSAGE, CANNOT_SAVE_DATA, SELECT_AT_LEAST
 };
