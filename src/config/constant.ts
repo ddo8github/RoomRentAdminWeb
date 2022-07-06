@@ -1,4 +1,5 @@
 import {RoomUtility} from '../models/models';
+import {SemanticWIDTHS} from 'semantic-ui-react';
 
 const NAV_ROOM_COMPANY = '/roomcom';
 const NAV_PARTNER = '/partner';
@@ -7,6 +8,8 @@ const ROOM_COMPANY = 'roomcom';
 const PARTNER = 'partner';
 const ROM_NEW = 'roomnew';
 const TIME_OUT_SECOND = 300;
+const CARD_PER_ROWS:SemanticWIDTHS = 5;
+const S3_ROOT_URL = 'https://ddo-myvideos.s3.ap-southeast-1.amazonaws.com';
 
 const API_LIST_PROVINCES = 'https://provinces.open-api.vn/api/p';
 
@@ -34,7 +37,7 @@ const ROOM_UTILITIES: RoomUtility[] = [
 ];
 
 const ADMIN_CONTACT_MESSAGE = 'Đã có sự cố xảy ra. Vui lòng liên hệ Admin';
-const CANNOT_SAVE_DATA = (feature: string) => `Đã có sự cố xảy ra. Chức năng ${feature} không thực hiện được. Vui lòng liên hệ Admin`;
+const CANNOT_GET_DATA = (feature: string) => `Đã có sự cố xảy ra. Chức năng ${feature} không thực hiện được. Vui lòng liên hệ Admin`;
 const SELECT_AT_LEAST = (minAmount: number) => `Chọn ít nhất ${minAmount} files`;
 
 const VALIDATION_MESSAGE = {
@@ -48,5 +51,6 @@ export const Constants = {
     NAV_ROOM_COMPANY, NAV_PARTNER, NAV_ROM_NEW, MSG_LOADING_APP,
     ROOM_COMPANY, PARTNER, ROM_NEW, TIME_OUT_SECOND,
     ROOM_TYPE_OPTIONS, ROOM_UTILITIES, API_LIST_PROVINCES,
-    ADMIN_CONTACT_MESSAGE, VALIDATION_MESSAGE, CANNOT_SAVE_DATA, SELECT_AT_LEAST
+    ADMIN_CONTACT_MESSAGE, VALIDATION_MESSAGE, CANNOT_GET_DATA, SELECT_AT_LEAST,
+    S3_ROOT_URL, CARD_PER_ROWS
 };

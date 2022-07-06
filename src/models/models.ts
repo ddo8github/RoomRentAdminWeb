@@ -111,11 +111,51 @@ interface RoomComImgViewModel {
     Desc: string;
 }
 
+interface RoomCompanySumary {
+    Id: number;
+    Roomnumber: string;
+    Street: string;
+    Ward: string;
+    District: string;
+    City: string;
+    Desc: string;
+    Price: number;
+    Square: number;
+    roomComImgViewModels: RoomComImgViewModel[];
+}
+
+interface PaginationHeader {
+    currentPage: number;
+    itemsPerPage: number;
+    totalItems: number;
+    totalPages: number;
+}
+
 interface RoomUtility {
     text: string;
     value: string;
     icon: SemanticICONS;
     nameField: string;
+}
+
+export class PagedList<T> {
+    Pagination: PaginationHeader;
+    Items: T;
+
+    constructor(items: T, pagination: PaginationHeader) {
+        this.Pagination = pagination;
+        this.Items = items;
+    }
+}
+
+export class PagingParams {
+    pageNumber;
+    pageSize;
+
+    constructor(pageNumber = 1, pageSize = 10) {
+        this.pageNumber = pageNumber;
+        this.pageSize = pageSize;
+    }
 }
 
 interface DataResultModel<T> {
@@ -160,5 +200,5 @@ interface Option {
 export type {
     UserLogin, SignoutModel, TokenModel, DataResultModel, RefreshTokenModel,
     FileModel, StepperModel, RoomInfo, Province, Ward, District,
-    Option, RoomUtility, RoomComViewModel, RoomComImgViewModel
+    Option, RoomUtility, RoomComViewModel, RoomComImgViewModel, RoomCompanySumary, PaginationHeader
 };

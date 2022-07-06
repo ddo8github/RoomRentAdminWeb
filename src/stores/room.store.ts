@@ -1,8 +1,7 @@
-import {FileModel, RoomComViewModel, RoomInfo, StepperModel} from '../models/models';
+import {FileModel, PaginationHeader, PagingParams, RoomComViewModel, RoomInfo, StepperModel} from '../models/models';
 import {makeAutoObservable} from 'mobx';
 import agent from '../utils/agent';
 import {Constants} from '../config/constant';
-import {store} from './stores';
 
 export default class RoomStore {
     public roomSteppers: StepperModel[] = [
@@ -30,6 +29,16 @@ export default class RoomStore {
     ];
     public roomInfo: RoomInfo | null = null;
     public filesPreparedUpload: FileModel[] = [];
+    public pagination: PaginationHeader | null = null;
+    public pagingParam: PagingParams = new PagingParams();
+
+    setPagination = (p: PaginationHeader | null) => {
+        this.pagination = p;
+    }
+
+    setPagingParams = (p: PagingParams) => {
+        this.pagingParam = p;
+    }
 
     setRoomInfo = (roomInfo: RoomInfo) => {
         roomInfo.Utilities.forEach((f) => {
@@ -73,7 +82,17 @@ export default class RoomStore {
                 await agent.Room.insertNewRoomCompany(room);
             }
         } catch (e) {
-            throw new Error(Constants.CANNOT_SAVE_DATA('insertNewCompanyRoom'));
+            throw new Error(Constants.CANNOT_GET_DATA('insertNewCompanyRoom'));
+        }
+    }
+
+    getListRoomCompany = async () => {
+        try {
+            const res = await agent.Room.getListRoomCompany(this.pagingParam);
+            this.setPagination(res.Data ? res.Data.Pagination : null);
+            return res.Data ? res.Data.Items : [];
+        } catch (e) {
+            throw new Error(Constants.CANNOT_GET_DATA('getListRoomCompany'));
         }
     }
 

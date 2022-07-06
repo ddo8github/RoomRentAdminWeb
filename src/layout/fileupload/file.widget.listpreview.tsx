@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Card, Image, Input, Label, Progress, Segment} from 'semantic-ui-react';
+import {Card, Image, Input, Label, Progress} from 'semantic-ui-react';
 import {FileModel} from '../../models/models';
 import ReactPlayer from 'react-player';
 import {observer} from 'mobx-react-lite';

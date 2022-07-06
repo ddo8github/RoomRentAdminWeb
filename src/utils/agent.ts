@@ -3,9 +3,11 @@ import {store} from '../stores/stores';
 import cryptor from './cryptor';
 import {
     DataResultModel,
-    District,
+    District, PagedList, PagingParams,
     Province,
-    RefreshTokenModel, RoomComViewModel,
+    RefreshTokenModel,
+    RoomCompanySumary,
+    RoomComViewModel,
     SignoutModel,
     TokenModel,
     UserLogin,
@@ -32,6 +34,10 @@ axios.interceptors.response.use(async (res) => {
     let ret: DataResultModel<any>;
     try {
         ret = cryptor.deResponseData<DataResultModel<any>>(res.data);
+        const pagination = res.headers['pagination'];
+        if (pagination) {
+            ret.Data = new PagedList(ret.Data, JSON.parse(pagination));
+        }
     } catch (e) {
         throw e;
     }
@@ -72,7 +78,8 @@ const Geography = {
 };
 
 const Room = {
-    insertNewRoomCompany: (room: RoomComViewModel) => requests.post<DataResultModel<Boolean>>('room/269133c5', room)
+    insertNewRoomCompany: (room: RoomComViewModel) => requests.post<DataResultModel<Boolean>>('room/269133c5', room),
+    getListRoomCompany: (pagingParam: PagingParams) => requests.get<DataResultModel<PagedList<RoomCompanySumary[]>>>(`room/119b029c?pageSize=${pagingParam.pageSize}&pageNumber=${pagingParam.pageNumber}`)
 };
 
 const agent = {
