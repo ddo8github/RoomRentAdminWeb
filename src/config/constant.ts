@@ -8,7 +8,8 @@ const ROOM_COMPANY = 'roomcom';
 const PARTNER = 'partner';
 const ROM_NEW = 'roomnew';
 const TIME_OUT_SECOND = 300;
-const CARD_PER_ROWS:SemanticWIDTHS = 5;
+const CARD_PER_ROWS: SemanticWIDTHS = 4;
+const PAGE_SIZE: number = 8;
 const S3_ROOT_URL = 'https://ddo-myvideos.s3.ap-southeast-1.amazonaws.com';
 
 const API_LIST_PROVINCES = 'https://provinces.open-api.vn/api/p';
@@ -52,5 +53,5 @@ export const Constants = {
     ROOM_COMPANY, PARTNER, ROM_NEW, TIME_OUT_SECOND,
     ROOM_TYPE_OPTIONS, ROOM_UTILITIES, API_LIST_PROVINCES,
     ADMIN_CONTACT_MESSAGE, VALIDATION_MESSAGE, CANNOT_GET_DATA, SELECT_AT_LEAST,
-    S3_ROOT_URL, CARD_PER_ROWS
+    S3_ROOT_URL, CARD_PER_ROWS, PAGE_SIZE
 };

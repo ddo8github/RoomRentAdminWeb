@@ -40,7 +40,7 @@ function RoomSecondStepComponent({prevStep, nextStep}: Props) {
 
     function setRoomComImg() {
         const res = filesPhotoRooms.map((m) => {
-            const roomImg: RoomComImgViewModel = {Desc: m.Desc, Doctype: m.Ext, Roomdocurl: m.S3FileName};
+            const roomImg: RoomComImgViewModel = {Desc: m.Desc, Doctype: m.Ext, Roomdocurl: m.S3FileName, Mainphoto: m.Mainphoto};
             return roomImg;
         });
         if (roomInfo) {

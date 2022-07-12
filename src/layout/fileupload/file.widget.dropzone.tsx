@@ -38,7 +38,8 @@ function FileWidgetDropzone({setFiles, acceptFileType}: Props) {
                 Location: '',
                 Bucket: '',
                 Error: undefined,
-                Desc: ''
+                Desc: '',
+                Mainphoto: 0
             };
             return fileModel;
         });

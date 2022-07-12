@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Card, Image, Input, Label, Progress} from 'semantic-ui-react';
+import {Card, Checkbox, Image, Input, Label, Progress, Radio} from 'semantic-ui-react';
 import {FileModel} from '../../models/models';
 import ReactPlayer from 'react-player';
 import {observer} from 'mobx-react-lite';
@@ -10,6 +10,7 @@ interface Props {
 
 function FileWidgetListPreview({files}: Props) {
     const [updateCount, setUpdateCount] = useState<number>(0);
+    const [mainPhoto, setMainPhoto] = useState<string | number | undefined>('');
     const timer = setInterval(() => {
         setUpdateCount(updateCount === 0 ? 1 : 0);
     }, 100);
@@ -58,14 +59,27 @@ function FileWidgetListPreview({files}: Props) {
                                                 <Input size={'mini'} key={'txtDesc' + index.toString()}
                                                        style={{width: '90%', marginBottom: '5px'}}
                                                        placeholder={'Ghi chú'} type={'text'}
-                                                       value={f.Desc}
+                                                       name={'Desc'}
                                                        onChange={(e) => f.Desc = e.target.value}/>
+                                            </Card.Description>
+                                            <Card.Description>
+                                                <Radio key={`chkMainPhoto${index}`} label={'Hình chính'}
+                                                       name={'Mainphoto'} value={f.File.name}
+                                                       checked={mainPhoto === f.File.name}
+                                                       onChange={(e, data) => {
+                                                           for (let i = 0; i < files.length; i++) {
+                                                               files[i].Mainphoto = 0;
+                                                           }
+                                                           f.Mainphoto = (data.value === f.File.name ? 1 : 0);
+                                                           setMainPhoto(data.value);
+                                                       }}/>
                                             </Card.Description>
                                             <Card.Content extra style={{width: '90%'}}
                                                           key={`cardContentExtra${index.toString()}`}>
+                                                {f.Percentage > 0 &&
                                                 <Progress key={`progress${index.toString()}`} percent={f.Percentage}
                                                           progress={'percent'} success autoSuccess={true}
-                                                          color={'green'}/>
+                                                          color={'green'}/>}
                                                 {f.Error && <Label key={`progressLabelError${index.toString()}`}
                                                                    color={'red'}>{f.Error}</Label>}
                                             </Card.Content>

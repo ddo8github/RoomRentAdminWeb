@@ -1,5 +1,6 @@
 import {StepProps} from 'semantic-ui-react/dist/commonjs/elements/Step/Step';
 import {SemanticICONS} from 'semantic-ui-react';
+import {Constants} from '../config/constant';
 
 interface UserLogin {
     username: string;
@@ -36,6 +37,7 @@ interface FileModel {
     Location: string;
     Error: string | undefined;
     Desc: string;
+    Mainphoto: number;
 }
 
 interface StepperModel extends StepProps {
@@ -109,6 +111,7 @@ interface RoomComImgViewModel {
     Roomdocurl: string;
     Doctype: string;
     Desc: string;
+    Mainphoto: number;
 }
 
 interface RoomCompanySumary {
@@ -152,7 +155,7 @@ export class PagingParams {
     pageNumber;
     pageSize;
 
-    constructor(pageNumber = 1, pageSize = 10) {
+    constructor(pageNumber = 1, pageSize = Constants.PAGE_SIZE) {
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;
     }

@@ -1,9 +1,13 @@
 import React from 'react';
 import {Grid, Placeholder, Segment} from 'semantic-ui-react';
 import {Constants} from '../../config/constant';
+import {number} from 'yup';
 
 function LoadingRoomsCompany() {
-    const data: number[] = [1, 2, 3, 4, 5];
+    const data: number[] = [];
+    for (let i = 0; i < Constants.PAGE_SIZE; i++) {
+        data.push(i);
+    }
     return (
         <div style={{marginBottom: '10px', marginTop: '10px'}}>
             <Grid columns={Constants.CARD_PER_ROWS} stackable>

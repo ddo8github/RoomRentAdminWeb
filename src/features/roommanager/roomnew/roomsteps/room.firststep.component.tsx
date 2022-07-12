@@ -11,6 +11,7 @@ import {observer} from 'mobx-react-lite';
 import {toast} from 'react-toastify';
 import NumericTextbox from '../../../../layout/custom/numeric.textbox';
 import LoadingPlaceholder from '../../../../layout/loadingplaceholder/loading.placeholder';
+import TextAreaCustom from '../../../../layout/custom/text.area.custom';
 
 interface Props {
     nextStep: () => void
@@ -198,6 +199,9 @@ function RoomFirstStepComponent({nextStep}: Props) {
                                     })
                                 }
                             </Grid>
+                            <div style={{marginTop: '10px'}}>
+                                <TextAreaCustom placeholder={'Ghi chú'} name={'Desc'} rows={3} label={'Ghi chú'}/>
+                            </div>
                             <Divider/>
                             <div style={{textAlign: 'right'}}>
                                 {isValid && <Button primary onClick={() => {

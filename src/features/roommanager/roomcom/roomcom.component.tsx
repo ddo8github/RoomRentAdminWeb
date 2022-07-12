@@ -54,25 +54,31 @@ function RoomcomComponent() {
                             {
                                 rooms.map((m, index) => {
                                     return (
-                                        <Card key={`cardRoom${index}`} href='#card-example-link-card' color={'blue'}>
+                                        <Card key={`cardRoom${index}`} href='#card-example-link-card' color={'blue'}
+                                              style={{'marginBottom': '25px'}}>
                                             <Image
                                                 src={`${Constants.S3_ROOT_URL}/${m.roomComImgViewModels[0].Roomdocurl}`}
                                                 wrapped ui={false}/>
                                             <Card.Content>
                                                 <Card.Header>{m.Roomnumber}</Card.Header>
-                                                <Card.Description style={{fontWeight: 'bold'}}>
+                                                <Card.Description style={{fontWeight: 'bold', fontSize: '12px'}}>
                                                     <p><Icon name={'home'} size={'large'}
-                                                             color={'blue'}/><span>{`${m.Street} ${m.Ward} ${m.District} ${m.City}`}</span>
+                                                             color={'blue'}/><span>{`${m.Street}, ${m.Ward}, ${m.District}, ${m.City}`}</span>
                                                     </p>
-                                                    <p><Icon name={'phone volume'} size={'large'}
-                                                             color={'blue'}/><span>0909888666</span>
+                                                    <p>
+                                                        <Icon name={'phone volume'} size={'large'}
+                                                              color={'blue'}/><span>0909888666</span>
                                                     </p>
-                                                    <p><Icon name={'money bill alternate outline'} size={'large'}
-                                                             color={'blue'}/><span>{m.Price}<sup>đ</sup>/tháng</span>
-                                                    </p>
-                                                    <p><Icon name={'square outline'} size={'large'}
-                                                             color={'blue'}/><span>{m.Square}m<sup>2</sup></span>
-                                                    </p>
+                                                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                                                        <p>
+                                                            <Icon name={'money bill alternate outline'} size={'large'}
+                                                                  color={'blue'}/><span>{m.Price.toLocaleString('en')}<sup>đ</sup>/tháng</span>
+                                                        </p>
+                                                        <p>
+                                                            <Icon name={'square outline'} size={'large'}
+                                                                  color={'blue'}/><span>{m.Square}m<sup>2</sup></span>
+                                                        </p>
+                                                    </div>
                                                 </Card.Description>
                                             </Card.Content>
                                             <Card.Content extra>
