@@ -4,6 +4,8 @@ import {SemanticWIDTHS} from 'semantic-ui-react';
 const NAV_ROOM_COMPANY = '/roomcom';
 const NAV_PARTNER = '/partner';
 const NAV_ROM_NEW = '/roomnew';
+const NAV_ROM_EDIT = '/edit/:id';
+const NAV_ROM_EDIT_PARAM = (id: string) => `/edit/${id}`;
 const ROOM_COMPANY = 'roomcom';
 const PARTNER = 'partner';
 const ROM_NEW = 'roomnew';
@@ -25,8 +27,8 @@ const ROOM_TYPE_OPTIONS = [
 const ROOM_UTILITIES: RoomUtility[] = [
     {text: 'Wifi', value: 'Wifi', icon: 'wifi', nameField: 'Wifi'},
     {text: 'WC riêng', value: 'WC riêng', icon: 'bath', nameField: 'Personalwc'},
-    {text: 'Giữ xe', value: 'Giữ xe', icon: 'motorcycle', nameField: 'Parking'},
-    {text: 'Tự do', value: 'Tự do', icon: 'history', nameField: 'Freetime'},
+    {text: 'Chỗ giữ xe', value: 'Giữ xe', icon: 'motorcycle', nameField: 'Parking'},
+    {text: 'Giờ giấc tự do', value: 'Tự do', icon: 'history', nameField: 'Freetime'},
     {text: 'Bếp', value: 'Bếp', icon: 'food', nameField: 'Kitchen'},
     {text: 'Điều hòa', value: 'Điều hòa', icon: 'snowflake', nameField: 'Aircon'},
     {text: 'Tủ lạnh', value: 'Tủ lạnh', icon: 'calendar', nameField: 'Fridge'},
@@ -49,7 +51,7 @@ const VALIDATION_MESSAGE = {
 
 
 export const Constants = {
-    NAV_ROOM_COMPANY, NAV_PARTNER, NAV_ROM_NEW, MSG_LOADING_APP,
+    NAV_ROOM_COMPANY, NAV_PARTNER, NAV_ROM_NEW, NAV_ROM_EDIT, NAV_ROM_EDIT_PARAM, MSG_LOADING_APP,
     ROOM_COMPANY, PARTNER, ROM_NEW, TIME_OUT_SECOND,
     ROOM_TYPE_OPTIONS, ROOM_UTILITIES, API_LIST_PROVINCES,
     ADMIN_CONTACT_MESSAGE, VALIDATION_MESSAGE, CANNOT_GET_DATA, SELECT_AT_LEAST,

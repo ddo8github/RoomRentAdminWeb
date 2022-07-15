@@ -6,8 +6,8 @@ import {
     District, PagedList, PagingParams,
     Province,
     RefreshTokenModel,
-    RoomCompanySumary,
-    RoomComViewModel,
+    RoomCompanySummary,
+    RoomComViewModel, RoomInfo,
     SignoutModel,
     TokenModel,
     UserLogin,
@@ -79,7 +79,9 @@ const Geography = {
 
 const Room = {
     insertNewRoomCompany: (room: RoomComViewModel) => requests.post<DataResultModel<Boolean>>('room/269133c5', room),
-    getListRoomCompany: (pagingParam: PagingParams) => requests.get<DataResultModel<PagedList<RoomCompanySumary[]>>>(`room/119b029c?pageSize=${pagingParam.pageSize}&pageNumber=${pagingParam.pageNumber}`)
+    getListRoomCompany: (pagingParam: PagingParams) => requests.get<DataResultModel<PagedList<RoomCompanySummary[]>>>(`room/119b029c?pageSize=${pagingParam.pageSize}&pageNumber=${pagingParam.pageNumber}`),
+    getRoomCompanyDetail: (roomId: string) => requests.get<DataResultModel<RoomInfo>>(`room/dd55b850?roomId=${roomId}`),
+    updateRoomCompany: (room: RoomComViewModel) => requests.post<DataResultModel<Boolean>>('room/bf984ec4', room)
 };
 
 const agent = {

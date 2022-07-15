@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './roomnew.component.css';
 import StepperComponent from '../../../layout/stepper/stepper.component';
 import {useStore} from '../../../stores/stores';
@@ -8,21 +8,41 @@ import RoomSecondStepComponent from './roomsteps/room.secondstep.component';
 import RoomThirdStepComponent from './roomsteps/room.thirdstep.component';
 import {toast} from 'react-toastify';
 import {Constants} from '../../../config/constant';
+import {useParams} from 'react-router-dom';
 
 function RoomNewComponent() {
-    const {roomStore: {roomSteppers, insertNewCompanyRoom}, commonStore: {setAppLoaded, goToPage}} = useStore();
+    const {
+        roomStore: {roomSteppers, insertNewCompanyRoom, updateRoomCompany, resetRoomInfo, setReloadForEdit},
+        commonStore: {setAppLoaded, goToPage, resetFilePhotoRooms}
+    } = useStore();
     const [step, setStep] = useState<number>(1);
+    const {id} = useParams<{ id: string }>();
 
     function nextStep() {
         setStep(step < 3 ? step + 1 : step);
     }
 
+    useEffect(() => {
+        return () => {
+            resetRoomInfo();
+            setReloadForEdit(true);
+            resetFilePhotoRooms();
+        };
+    }, []);
+
     async function finishStep() {
         try {
-            setAppLoaded(true, 'Đang lưu dữ liệu...');
-            await insertNewCompanyRoom();
-            goToPage(Constants.NAV_ROOM_COMPANY);
-            setAppLoaded(false, '');
+            if (id) {
+                setAppLoaded(true, 'Đang lưu dữ liệu...');
+                await updateRoomCompany();
+                goToPage(Constants.NAV_ROOM_COMPANY);
+                setAppLoaded(false, '');
+            } else {
+                setAppLoaded(true, 'Đang lưu dữ liệu...');
+                await insertNewCompanyRoom();
+                goToPage(Constants.NAV_ROOM_COMPANY);
+                setAppLoaded(false, '');
+            }
         } catch (e: any) {
             setAppLoaded(false, '');
             toast.error(e.Message);

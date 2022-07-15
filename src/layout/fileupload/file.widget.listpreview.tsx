@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Card, Checkbox, Image, Input, Label, Progress, Radio} from 'semantic-ui-react';
+import {Card, Image, Input, Label, Progress, Radio} from 'semantic-ui-react';
 import {FileModel} from '../../models/models';
 import ReactPlayer from 'react-player';
 import {observer} from 'mobx-react-lite';
@@ -10,10 +10,14 @@ interface Props {
 
 function FileWidgetListPreview({files}: Props) {
     const [updateCount, setUpdateCount] = useState<number>(0);
-    const [mainPhoto, setMainPhoto] = useState<string | number | undefined>('');
+    const [mainPhoto, setMainPhoto] = useState<string | number | undefined>(() => {
+        files[0].Mainphoto = 1;
+        return files[0].File.name;
+    });
     const timer = setInterval(() => {
         setUpdateCount(updateCount === 0 ? 1 : 0);
     }, 100);
+
     useEffect(() => {
         // It is component Unmount
         return () => {
@@ -62,7 +66,7 @@ function FileWidgetListPreview({files}: Props) {
                                                        name={'Desc'}
                                                        onChange={(e) => f.Desc = e.target.value}/>
                                             </Card.Description>
-                                            <Card.Description>
+                                            {f.Ext.toLowerCase() !== 'mp4' && <Card.Description>
                                                 <Radio key={`chkMainPhoto${index}`} label={'Hình chính'}
                                                        name={'Mainphoto'} value={f.File.name}
                                                        checked={mainPhoto === f.File.name}
@@ -73,7 +77,7 @@ function FileWidgetListPreview({files}: Props) {
                                                            f.Mainphoto = (data.value === f.File.name ? 1 : 0);
                                                            setMainPhoto(data.value);
                                                        }}/>
-                                            </Card.Description>
+                                            </Card.Description>}
                                             <Card.Content extra style={{width: '90%'}}
                                                           key={`cardContentExtra${index.toString()}`}>
                                                 {f.Percentage > 0 &&

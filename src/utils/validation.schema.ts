@@ -15,6 +15,7 @@ const newRoomInfoValidationSchema = Yup.object({
     DistrictCode: Yup.string().required(Constants.VALIDATION_MESSAGE.MANDATORY('Quận huyện')),
     WardCode: Yup.string().required(Constants.VALIDATION_MESSAGE.MANDATORY('Phường xã')),
     Street: Yup.string().required(Constants.VALIDATION_MESSAGE.MANDATORY('Số nhà và tên đường')),
+    Phone: Yup.string().required(Constants.VALIDATION_MESSAGE.MANDATORY('Số điện thoại')),
 });
 
 export const Validations = {

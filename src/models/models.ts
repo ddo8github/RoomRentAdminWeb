@@ -78,10 +78,12 @@ interface RoomInfo {
     CityCode: string;
     Ward: string;
     WardCode: string;
+    Phone: string;
     roomComImgViewModels: RoomComImgViewModel[];
 }
 
 interface RoomComViewModel {
+    Id: number | null;
     Roomnumber: string;
     Street: string;
     Ward: string;
@@ -104,6 +106,10 @@ interface RoomComViewModel {
     Nearmarket: number;
     Price: number;
     Square: number;
+    CityCode: string;
+    DistrictCode: string;
+    WardCode: string;
+    Phone: string;
     roomComImgViewModels: RoomComImgViewModel[];
 }
 
@@ -114,7 +120,8 @@ interface RoomComImgViewModel {
     Mainphoto: number;
 }
 
-interface RoomCompanySumary {
+interface RoomCompanySummary {
+    [key: string]: any;
     Id: number;
     Roomnumber: string;
     Street: string;
@@ -124,6 +131,20 @@ interface RoomCompanySumary {
     Desc: string;
     Price: number;
     Square: number;
+    Wifi: number;
+    Personalwc: number;
+    Parking: number;
+    Freetime: number;
+    Kitchen: number;
+    Aircon: number;
+    Fridge: number;
+    Washingmachine: number;
+    Type: string;
+    Tv: number;
+    Garden: number;
+    Balcony: number;
+    Nearmarket: number;
+    Phone: string;
     roomComImgViewModels: RoomComImgViewModel[];
 }
 
@@ -203,5 +224,5 @@ interface Option {
 export type {
     UserLogin, SignoutModel, TokenModel, DataResultModel, RefreshTokenModel,
     FileModel, StepperModel, RoomInfo, Province, Ward, District,
-    Option, RoomUtility, RoomComViewModel, RoomComImgViewModel, RoomCompanySumary, PaginationHeader
+    Option, RoomUtility, RoomComViewModel, RoomComImgViewModel, RoomCompanySummary, PaginationHeader
 };

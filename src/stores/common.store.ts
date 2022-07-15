@@ -18,6 +18,10 @@ export class CommonStore {
         makeAutoObservable(this);
     }
 
+    resetFilePhotoRooms = () => {
+        this.filesPhotoRooms = [];
+    }
+
     sleep = (delay: number) => {
         return new Promise((resolve) => {
             setTimeout(resolve, delay);

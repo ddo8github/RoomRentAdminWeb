@@ -18,7 +18,7 @@ export class RouterConfig extends Component<any, any> {
         return (
             <Switch>
                 <PrivateRoute exact path={Constants.NAV_ROOM_COMPANY} component={RoomcomComponent}/>
-                <PrivateRoute exact path={Constants.NAV_ROM_NEW} component={RoomNewComponent}/>
+                <PrivateRoute exact path={[Constants.NAV_ROM_NEW, Constants.NAV_ROM_EDIT]} component={RoomNewComponent}/>
                 <PrivateRoute exact path='/profile' component={ProfileComponent}/>
                 <PrivateRoute exact path={Constants.NAV_PARTNER} component={PartnerComponent}/>
                 <PrivateRoute exact path='/video' component={VideoComponent}/>
