@@ -11,8 +11,13 @@ interface Props {
 function FileWidgetListPreview({files}: Props) {
     const [updateCount, setUpdateCount] = useState<number>(0);
     const [mainPhoto, setMainPhoto] = useState<string | number | undefined>(() => {
-        files[0].Mainphoto = 1;
-        return files[0].File.name;
+        const imgFile = files.find((f) => f.Ext.toLowerCase() === 'jpg');
+        if (imgFile) {
+            imgFile.Mainphoto = 1;
+            return imgFile.File.name;
+        } else {
+            return '';
+        }
     });
     const timer = setInterval(() => {
         setUpdateCount(updateCount === 0 ? 1 : 0);

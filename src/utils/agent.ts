@@ -3,11 +3,14 @@ import {store} from '../stores/stores';
 import cryptor from './cryptor';
 import {
     DataResultModel,
-    District, PagedList, PagingParams,
+    District,
+    PagedList,
+    PagingParams,
     Province,
     RefreshTokenModel,
     RoomCompanySummary,
-    RoomComViewModel, RoomInfo,
+    RoomComViewModel,
+    RoomInfo,
     SignoutModel,
     TokenModel,
     UserLogin,

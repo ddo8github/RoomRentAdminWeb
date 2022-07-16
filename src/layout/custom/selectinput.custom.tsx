@@ -18,6 +18,7 @@ function SelectInputCustom<T>(props: Props) {
             <label>{props.label}</label>
             <Dropdown options={props.options}
                       selection
+                      search
                       clearable
                       value={field.value || null}
                       onChange={(event, data) => {

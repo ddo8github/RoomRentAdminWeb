@@ -1,33 +1,9 @@
-import {FileModel, PaginationHeader, PagingParams, RoomComViewModel, RoomInfo, StepperModel} from '../models/models';
+import {FileModel, PaginationHeader, PagingParams, RoomComViewModel, RoomInfo} from '../models/models';
 import {makeAutoObservable, runInAction} from 'mobx';
 import agent from '../utils/agent';
 import {Constants} from '../config/constant';
-import {store} from './stores';
 
 export default class RoomStore {
-    public roomSteppers: StepperModel[] = [
-        {
-            key: 1,
-            icon: 'info',
-            title: 'Thông tin',
-            description: 'Nhập thông tin phòng',
-            active: true
-        },
-        {
-            key: 2,
-            icon: 'images',
-            title: 'Hình ảnh & Video',
-            description: 'Upload hình ảnh và video',
-            active: false
-        },
-        {
-            key: 3,
-            icon: 'signup',
-            title: 'Xác nhận',
-            description: 'Xem lại và xác nhận',
-            active: false
-        }
-    ];
     public roomInfo: RoomInfo | null = null;
     public filesPreparedUpload: FileModel[] = [];
     public pagination: PaginationHeader | null = null;
@@ -86,6 +62,7 @@ export default class RoomStore {
 
     setRoomInfoInit = (roomInfo: RoomInfo) => {
         runInAction(() => {
+            Constants.ROOM_UTILITIES.forEach((f) => roomInfo[f.nameField] = 0);
             roomInfo.Utilities.forEach((f) => {
                 roomInfo[f] = 1;
             });

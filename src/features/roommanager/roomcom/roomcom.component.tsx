@@ -3,10 +3,11 @@ import React, {useEffect, useState} from 'react';
 import {Button, Card, Header, Icon, Image, Rating} from 'semantic-ui-react';
 import {useStore} from '../../../stores/stores';
 import {Constants} from '../../../config/constant';
-import {PagingParams, RoomCompanySummary, RoomInfo} from '../../../models/models';
+import {PagingParams, RoomCompanySummary} from '../../../models/models';
 import {observer} from 'mobx-react-lite';
 import InfiniteScroll from 'react-infinite-scroller';
 import LoadingRoomsCompany from '../../../layout/loadingplaceholder/loading.roomscompany';
+import {toast} from 'react-toastify';
 
 function RoomcomComponent() {
     const {
@@ -18,9 +19,14 @@ function RoomcomComponent() {
     const [loadFirstTime, setLoadFirstTime] = useState<boolean>(false);
     useEffect(() => {
         (async () => {
-            if (rooms.length === 0) {
-                setLoadFirstTime(true);
-                setRooms(await getListRoomCompany());
+            try {
+                if (rooms.length === 0) {
+                    setLoadFirstTime(true);
+                    setRooms(await getListRoomCompany());
+                    setLoadFirstTime(false);
+                }
+            } catch (e: any) {
+                toast.error(e.Message);
                 setLoadFirstTime(false);
             }
         })();
@@ -36,7 +42,7 @@ function RoomcomComponent() {
 
     function parseDesc(room: RoomCompanySummary) {
         const res = Constants.ROOM_UTILITIES.map((m) => room[m.nameField] === 1 ? m.text : '');
-        return (res.length > 0 ? `${room.Type} đẹp. Có: ` + res.filter((f) => f !== '').join(', ') : '');
+        return (res.length > 0 ? `${room.Type} đẹp. Có: ` + res.filter((f) => f !== '').join(', ') + '.' : '');
     }
 
     return (

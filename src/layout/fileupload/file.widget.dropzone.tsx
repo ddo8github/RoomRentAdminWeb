@@ -13,18 +13,11 @@ interface Props {
 
 function FileWidgetDropzone({setFiles, acceptFileType}: Props) {
     const dzStyle = {
-        border: 'dashed 3px #eee',
-        borderColor: '#eee',
-        borderRadius: '5px',
-        paddingTop: '10px',
-        textAlign: 'center' as 'center',
-        height: '120px',
-        cursor: 'pointer'
+        border: 'dashed 3px #eee', borderColor: '#eee', borderRadius: '5px',
+        paddingTop: '10px', textAlign: 'center' as 'center', height: '120px', cursor: 'pointer'
     };
 
-    const dzActive = {
-        borderColor: 'green'
-    };
+    const dzActive = {borderColor: 'green'};
 
     const onDrop = useCallback((acceptedFiles) => {
         const res = acceptedFiles.map((file: File) => {

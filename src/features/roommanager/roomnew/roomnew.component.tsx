@@ -9,10 +9,11 @@ import RoomThirdStepComponent from './roomsteps/room.thirdstep.component';
 import {toast} from 'react-toastify';
 import {Constants} from '../../../config/constant';
 import {useParams} from 'react-router-dom';
+import {PagingParams} from '../../../models/models';
 
 function RoomNewComponent() {
     const {
-        roomStore: {roomSteppers, insertNewCompanyRoom, updateRoomCompany, resetRoomInfo, setReloadForEdit},
+        roomStore: {insertNewCompanyRoom, updateRoomCompany, resetRoomInfo, setReloadForEdit, setPagingParams},
         commonStore: {setAppLoaded, goToPage, resetFilePhotoRooms}
     } = useStore();
     const [step, setStep] = useState<number>(1);
@@ -35,11 +36,13 @@ function RoomNewComponent() {
             if (id) {
                 setAppLoaded(true, 'Đang lưu dữ liệu...');
                 await updateRoomCompany();
+                setPagingParams(new PagingParams());
                 goToPage(Constants.NAV_ROOM_COMPANY);
                 setAppLoaded(false, '');
             } else {
                 setAppLoaded(true, 'Đang lưu dữ liệu...');
                 await insertNewCompanyRoom();
+                setPagingParams(new PagingParams());
                 goToPage(Constants.NAV_ROOM_COMPANY);
                 setAppLoaded(false, '');
             }
@@ -54,7 +57,7 @@ function RoomNewComponent() {
     }
 
     function renderStep() {
-        roomSteppers.map((m) => {
+        Constants.ROOM_STEPPERS.map((m) => {
             m.active = (m.key === step);
         });
         switch (step) {
@@ -69,7 +72,7 @@ function RoomNewComponent() {
 
     return (
         <div style={{display: 'table', margin: '0 auto', width: '100%'}}>
-            <StepperComponent steppers={roomSteppers}/>
+            <StepperComponent steppers={Constants.ROOM_STEPPERS}/>
             <div style={{marginBottom: '10px'}}>
                 {renderStep()}
             </div>

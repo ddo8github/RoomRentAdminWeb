@@ -1,4 +1,4 @@
-import {RoomUtility} from '../models/models';
+import {RoomUtility, StepperModel} from '../models/models';
 import {SemanticWIDTHS} from 'semantic-ui-react';
 
 const NAV_ROOM_COMPANY = '/roomcom';
@@ -10,8 +10,8 @@ const ROOM_COMPANY = 'roomcom';
 const PARTNER = 'partner';
 const ROM_NEW = 'roomnew';
 const TIME_OUT_SECOND = 300;
-const CARD_PER_ROWS: SemanticWIDTHS = 4;
-const PAGE_SIZE: number = 8;
+const CARD_PER_ROWS: SemanticWIDTHS = 2;
+const PAGE_SIZE: number = 2;
 const S3_ROOT_URL = 'https://ddo-myvideos.s3.ap-southeast-1.amazonaws.com';
 
 const API_LIST_PROVINCES = 'https://provinces.open-api.vn/api/p';
@@ -39,6 +39,30 @@ const ROOM_UTILITIES: RoomUtility[] = [
     {text: 'Gần chợ', value: 'Gần chợ', icon: 'shopping cart', nameField: 'Nearmarket'},
 ];
 
+const ROOM_STEPPERS: StepperModel[] = [
+    {
+        key: 1,
+        icon: 'info',
+        title: 'Thông tin',
+        description: 'Nhập thông tin phòng',
+        active: true
+    },
+    {
+        key: 2,
+        icon: 'images',
+        title: 'Hình ảnh & Video',
+        description: 'Upload hình ảnh và video',
+        active: false
+    },
+    {
+        key: 3,
+        icon: 'signup',
+        title: 'Xác nhận',
+        description: 'Xem lại và xác nhận',
+        active: false
+    }
+];
+
 const ADMIN_CONTACT_MESSAGE = 'Đã có sự cố xảy ra. Vui lòng liên hệ Admin';
 const CANNOT_GET_DATA = (feature: string) => `Đã có sự cố xảy ra. Chức năng ${feature} không thực hiện được. Vui lòng liên hệ Admin`;
 const SELECT_AT_LEAST = (minAmount: number) => `Chọn ít nhất ${minAmount} files`;
@@ -55,5 +79,5 @@ export const Constants = {
     ROOM_COMPANY, PARTNER, ROM_NEW, TIME_OUT_SECOND,
     ROOM_TYPE_OPTIONS, ROOM_UTILITIES, API_LIST_PROVINCES,
     ADMIN_CONTACT_MESSAGE, VALIDATION_MESSAGE, CANNOT_GET_DATA, SELECT_AT_LEAST,
-    S3_ROOT_URL, CARD_PER_ROWS, PAGE_SIZE
+    S3_ROOT_URL, CARD_PER_ROWS, PAGE_SIZE, ROOM_STEPPERS
 };

@@ -1,7 +1,6 @@
 import React from 'react';
 import {Grid, Placeholder, Segment} from 'semantic-ui-react';
 import {Constants} from '../../config/constant';
-import {number} from 'yup';
 
 function LoadingRoomsCompany() {
     const data: number[] = [];
